@@ -23,12 +23,25 @@ mainfont: Times New Roman
 
 ```{r setup, include=FALSE}
 # Set your working directory
-
+getwd()
 # Load your packages
+install.packages("tidyverse")
+library(tidyverse)
+install.packages("magrittr")
+library(magrittr)
+install.packages("dplyr")
+library(dplyr)
 
 # Set your ggplot theme
 
 # Load your datasets
+Heath_Data_Raw <- readxl::read_xlsx("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/County Health Data 2021.xlsx")
+
+```
+
+```{r}
+#Wrangling the dataset 
+
 
 ```
 
