@@ -6,8 +6,8 @@ output:
     number_sections: yes
 geometry: margin=2.54cm
 title: "Insert title of project here"
-subtitle: "Web address for GitHub repository"
-author: "Name"
+subtitle: "https://github.com/mchan211/ChanJacob_ENV872_EDA_FinalProject.git"
+author: "Natasha Jacob and Meilin Chan"
 fontsize: 12pt
 mainfont: Times New Roman
 
@@ -21,21 +21,33 @@ mainfont: Times New Roman
 \listoffigures 
 \newpage
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message = FALSE, error = FALSE}
 # Set your working directory
 getwd()
 # Load your packages
-install.packages("tidyverse")
+#install.packages("tidyverse")
 library(tidyverse)
-install.packages("magrittr")
+#install.packages("magrittr")
 library(magrittr)
-install.packages("dplyr")
+#install.packages("dplyr")
 library(dplyr)
+#install.packages("lubridate")
+library(lubridate)
+#install.packages("sf")
+library(sf)
+#install.packages("mapview")
+library(mapview)
+
 
 # Set your ggplot theme
 
+
 # Load your datasets
-Heath_Data_Raw <- readxl::read_xlsx("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/County Health Data 2021.xlsx")
+#Heath_Data_Raw <- readxl::read_xlsx("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/County Health Data 2021.xlsx")
+
+nc.counties.sf<- st_read("./Data/Raw/cb_2018_us_county_20m.shp") %>% 
+  filter(STATEFP == 37) #NC counties
+
 
 ```
 
