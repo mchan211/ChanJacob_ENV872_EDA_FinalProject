@@ -57,10 +57,25 @@ Health_data_transposed <- as.data.frame(Health_data_transposed)
 
 #Adding a pipe statement to rename the columns
 Health_data_transposed_clean <- Health_data_transposed %>%
-  rename(Population = 1, Child_Population = 2, Elderly_Population = 3, White = 4, Hispanic_Latinx = 5, African_American = 6, American_Indian = 9, Reading_Proficiency = 12, Uninsured_Adults = 14, Medicaid_CHIP_enrolles = 16, Primary_Care_Physicians = 17, Low_Birthweight = 32, Infant_Mortality_Rate = 33, Poverty = 41, Air_Pollution = 52) 
+  rename(Population = 1, Child_Population_percentage = 2, Elderly_Population_percentage = 3, White_Population_percentage = 4, Hispanic_Latinx_percentage = 5, African_American_percentage = 6, American_Indian_percentage = 9, Reading_Proficiency_percentage = 12, Uninsured_Adults_percentage = 14, Medicaid_CHIP_enrolles_percentage = 16, Primary_Care_Physicians = 17, Low_Birthweight_percentage = 32, Infant_Mortality_Rate = 33, Poverty_percentage = 41, Air_Pollution = 52) 
+
 
 #Selecting the required rows 
 Health_data_transposed_clean_1 <- Health_data_transposed_clean[-c(1), -c(7,8, 10, 11, 13, 15, 18:31, 34:40, 42:51, 53:59)]
+
+#Removing '%' character from the dataframe using the 'gsub' function
+Health_data_transposed_clean_1 <- Health_data_transposed_clean_1 %>%
+  mutate(Child_Population_percentage = as.numeric(gsub("%", "", Child_Population_percentage)),
+         Elderly_Population_percentage = as.numeric(gsub("%", "", Elderly_Population_percentage)),
+         White_Population_percentage = as.numeric(gsub("%", "", White_Population_percentage)),
+         Hispanic_Latinx_percentage = as.numeric(gsub("%", "", Hispanic_Latinx_percentage)),
+         African_American_percentage = as.numeric(gsub("%", "", African_American_percentage)),
+         American_Indian_percentage = as.numeric(gsub("%", "", American_Indian_percentage)),
+         Reading_Proficiency_percentage = as.numeric(gsub("%", "", Reading_Proficiency_percentage)),
+         Uninsured_Adults_percentage = as.numeric(gsub("%", "", Uninsured_Adults_percentage)),
+         Medicaid_CHIP_enrolles_percentage = as.numeric(gsub("%", "", Medicaid_CHIP_enrolles_percentage)),
+         Low_Birthweight_percentage = as.numeric(gsub("%", "", Low_Birthweight_percentage)),
+         Poverty_percentage = as.numeric(gsub("%", "", Poverty_percentage)))
 
 ```
 
