@@ -32,6 +32,9 @@ install.packages("magrittr")
 library(magrittr)
 install.packages("dplyr")
 library(dplyr)
+install.packages("sf")
+library(sf)
+
 
 # Set your ggplot theme
 mytheme <- theme_classic(base_size = 12) +
@@ -83,15 +86,27 @@ Health_data_transposed_clean_1 <- Health_data_transposed_clean_1 %>%
          Low_Birthweight_percentage = as.numeric(gsub("%", "", Low_Birthweight_percentage)),
          Poverty_percentage = as.numeric(gsub("%", "", Poverty_percentage)))
 
+
+#Checking the class of Health_data_transposed_clean_1
+class(Health_data_transposed_clean_1)
 ```
 
+Analysis: 
 
 ```{r}
+mapviewOptions(fgb = FALSE)
+
+#Loading in the shapefile
+NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
+  filter(STATEFP == 37)
+
+NorthCarolina_counties_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen"))
+
+mapview(NorthCarolina_counties_sf)
+
 
 ```
-
-
-
 
 
 # Rationale and Research Questions
