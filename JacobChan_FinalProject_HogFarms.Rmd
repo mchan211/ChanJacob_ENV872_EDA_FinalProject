@@ -21,6 +21,16 @@ mainfont: Times New Roman
 \listoffigures 
 \newpage
 
+# Rationale and Research Questions
+> Our main research question was if NC counties with higher concentration of hog farms would have higher health disparities compared to counties with lower hog farm concentrations. To research this, we looked at health and population distribution data for each NC county and specifically looked at data for counties with the highest concentrations of hog farms (Bladen, Duplin, Greene, Sampson, Robeson, Wayne) and comparing them to Durham as we are current residents of this county. We wanted to gain a better understanding of the inequities and environmental justice issues that stem from NC hog farms and pork production economy. 
+
+\newpage
+
+# Dataset Information
+>Our dataset is...........
+
+\newpage
+
 ```{r setup, include=FALSE}
 # Set your working directory
 getwd()
@@ -45,11 +55,11 @@ Health_Data_Raw <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/Count
 
 ```
 
-#Analysis
+# Exploratory Analysis 
 
 ##Data Wrangling
 
-```{r}
+```{r, data wrangling}
 ##Wrangling the dataset 
 
 #Removing columns and rows containing weblinks and other metadata 
@@ -105,33 +115,13 @@ nc_county_sf <- read_sf("./Data/Spatial/cb_2018_us_county_20m.shp") %>%
 
 ```
 
-
-
-
-
-# Rationale and Research Questions
-> Our main research question was if NC counties with higher concentration of hog farms would have higher health disparities compared to counties with lower hog farm concentrations. To research this, we looked at health and population distribution data for each NC county and specifically looked at data for counties with the highest concentrations of hog farms (Bladen, Duplin, Greene, Sampson, Robeson, Wayne) and comparing them to Durham as we are current residents of this county. We wanted to gain a better understanding of the inequities and environmental justice issues that stem from NC hog farms and pork production economy. 
-
-
-\newpage
-
-# Dataset Information
-
-
-
-\newpage
-
-# Exploratory Analysis 
-
-
-
 \newpage
 
 # Analysis
+> From our analysis we found......
 
 
-
-## Question 1: <insert specific question here and add additional subsections for additional questions below, if needed>
+## Question 1: 
 
 ## Question 2: 
 
@@ -146,6 +136,6 @@ nc_county_sf <- read_sf("./Data/Spatial/cb_2018_us_county_20m.shp") %>%
 \newpage
 
 # References
-<add references here if relevant, otherwise delete this section> 
+
 + [Environmental Working Group Map - Distribution of Animal Agriculture Farms] <https://www.ewg.org/interactive-maps/2020-fields-of-filth/map/>
 + [NC Farms and Floodplains] <https://sites.tufts.edu/gis/files/2017/06/Moore_Emily_UEP232_2016.pdf>
