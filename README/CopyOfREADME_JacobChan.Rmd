@@ -1,0 +1,114 @@
+---
+title: "ChanJacob_README"
+author: "Meilin Chan and Natasha Jacob"
+date: "4/6/2022"
+output: pdf_document
+---
+
+# <ChanJacob_ENV872_EDA_FinalProject>
+```{r setup, include = FALSE, message = FALSE, warning=FALSE}
+library(tidyverse)
+library(lubridate)
+library(dplyr)
+
+```
+
+<Instructions: copy and paste this template into your project README file (found in the parent folder of the repository). Fill in relevant information as requested.>
+
+<General notes: add as much information as is relevant for your repository. Some overarching guidelines are provided, but feel free to expand on these guidelines.>
+<More resources found here: https://www.dataone.org/all-best-practices>
+<Delete the text inside the brackets when formatting your file.>
+
+## Summary
+
+> The data within this repository includes a shapefile to conduct any spatial analysis as well as raw data files which includes public health and population distribution data per NC county. The purpose of this repository is to examine if there are higher levels of health challenges and disparities within NC with high concentrations of hog farms compared to other NC counties. We will compare racial, health, etc. distributions within North Carolina compared to counties with the highest concentration of hog farms. 
+
+
+## Investigators
+
+**Meilin Chan**  
+*meilin.chan@duke.edu*  
+  
+**Natasha Jacob**  
+*natasha.jacob@duke.edu*  
+
+
+## Keywords
+
+* hog farms
+* environmental racism
+* environmental health
+* health disparities
+
+## Database Information
+
+* County Health Data 2021.xlsx (Raw folder)
+  + Source: [NCIOM Data] <https://nciom.org/nc-health-data/map/?msclkid=9e415084b5bb11ec86c6f367b7f93e6c>  
+  + accessed: April 6, 2022
+  
+* County Health Data 2021.csv (Process folder)
+  + Source: wrangled County Health Data 2021.xlsx to csv format
+  
+* cb_2019_us_county_20m.shp (Raw folder)
+  + Source: Environmental_Data_Analytics_2022 Class GitHub Repository (Folder: Data/Spatial)
+
+
+## Folder structure, file formats, and naming conventions 
++ Folders
+  *Data = stores all data used in the project
+    * Raw = raw data, unwrangled
+    * Processed = wrangled data
+  * README = folder containing the template and project-specific version of README which provides background and overview of the repository and purpose of the project.
+
++ Types of files
+  *.csv = for wrangling and creation of dataframes for ggplot visualizations and other analyses
+  *.shp = for spatial analyses
+  
++ Naming of files
+  * Raw data file names are kept as the original file names when pulled from the source data bases. 
+  * Processed data file names include a short description of what the files contain
+
+
+## Metadata
+
+```{r metadata info, echo = FALSE, message=FALSE, warning=FALSE}
+countyhealth <- read.csv("../Data/Processed/Health_data_transposed_clean_1.csv", stringsAsFactors = TRUE)
+
+colnames(countyhealth)
+
+```
+|             Column Name               |     Description - all per county     |
+|:-------------------------------------:|:------------------------------------:|
+|    Population                         |   Total population                   |
+|    Child_Population_percentage        |   % (per county)                     |
+|    Elderly_Population_percentage      |   % (per county)                     |
+|    White_Population_percentage        |   % (per county)                     |
+|    Hispanic_Latinx_percentage         |   % (per county)                     |
+|    African_American_percentage        |   % (per county)                     |
+|    American_Indian_percentage         |   % (per county)                     |
+|    Reading_Proficiency_percentage     |   % literacy rate per county         |
+|    Uninsured_Adults_percentage        |   % adults w/out health insurance    |
+|    Medicaid_CHIP_enrolles_percentage  |   % individ. w/ Medicaid or CHIP     |
+|    Primary_Care_Physicians            |   ?ratio of physicians to population?|
+|    Low_Birthweight_percentage         |   % of low birth weight occurrences  |
+|    Infant_Mortality_Rate              |                                      |
+|    Poverty_percentage                 |                                      |
+|    Air_Pollution                      |                                      |
+
+
+<For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.> 
+
+## Scripts and code
+
+<list any software scripts/code contained in the repository and a description of their purpose.>
+
+## Quality assurance/quality control
+
+<describe any relevant QA/QC procedures taken with your data. Some ideas can be found here:>
+<https://www.dataone.org/best-practices/develop-quality-assurance-and-quality-control-plan>
+<https://www.dataone.org/best-practices/ensure-basic-quality-control>
+<https://www.dataone.org/best-practices/communicate-data-quality>
+<https://www.dataone.org/best-practices/identify-outliers>
+<https://www.dataone.org/best-practices/identify-values-are-estimated>
+
+
