@@ -91,9 +91,9 @@ colnames(countyhealth)
 |    Medicaid_CHIP_enrolles_percentage  |   % individ. w/ Medicaid or CHIP     |
 |    Primary_Care_Physicians            |   ?ratio of physicians to population?|
 |    Low_Birthweight_percentage         |   % of low birth weight occurrences  |
-|    Infant_Mortality_Rate              |   % rate of infant mortality         |
-|    Poverty_percentage                 |   % of pop. living under poverty line|
-|    Air_Pollution                      |   avg. daily density of PM (ug/m3)   |
+|    Infant_Mortality_Rate              |                                      |
+|    Poverty_percentage                 |                                      |
+|    Air_Pollution                      |                                      |
 
 
 <For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.> 
