@@ -26,12 +26,13 @@ mainfont: Times New Roman
 getwd()
 
 # Load your packages
-install.packages("tidyverse")
+#install.packages("tidyverse")
 library(tidyverse)
-install.packages("magrittr")
+#install.packages("magrittr")
 library(magrittr)
-install.packages("dplyr")
+#install.packages("dplyr")
 library(dplyr)
+library(sf)
 
 # Set your ggplot theme
 mytheme <- theme_classic(base_size = 12) +
@@ -41,9 +42,12 @@ theme_set(mytheme)
 
 # Load your datasets
 Health_Data_Raw <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/County Health Data 2021.csv", stringsAsFactors = TRUE)
+
 ```
 
+#Analysis
 
+##Data Wrangling
 
 ```{r}
 ##Wrangling the dataset 
@@ -53,8 +57,9 @@ Health_Data_Clean <- Health_Data_Raw[-c(1,2,3),-c(1,3, 4, 5, 6)]
 
 #Using a pipe to select and rename columns
 Health_Data_Clean <- Health_Data_Clean %>%
-  select(Bold.Indicator.Name.Text, NC, X.9, X.31, X.82, X.78) %>%
-  rename(Indicators = Bold.Indicator.Name.Text, Bladen = X.9, Duplin = X.31, Sampson = X.82, Robeson = X.78)
+  select(Bold.Indicator.Name.Text, NC, X.8, X.30,X.31, X.39, X.81, X.77, X.95) %>%
+  rename(Indicators = Bold.Indicator.Name.Text, Bladen = X.8, Duplin = X.30, Durham = X.31, Greene = X.39, Sampson = X.81, Robeson = X.77, Wayne = X.95)
+#Durham - 
 
 #Transposing the data
 Health_data_transposed <- t(Health_Data_Clean)
@@ -83,8 +88,14 @@ Health_data_transposed_clean_1 <- Health_data_transposed_clean_1 %>%
          Low_Birthweight_percentage = as.numeric(gsub("%", "", Low_Birthweight_percentage)),
          Poverty_percentage = as.numeric(gsub("%", "", Poverty_percentage)))
 
+#Filtering for NC counties from US counties shapefile
+nc_county_sf <- read_sf("./Data/Spatial/cb_2018_us_county_20m.shp") %>%
+  filter(STATEFP == 37) #filter for NC counties
+
+
 ```
 
+## Data Visualization
 
 ```{r}
 
@@ -95,7 +106,7 @@ Health_data_transposed_clean_1 <- Health_data_transposed_clean_1 %>%
 
 
 # Rationale and Research Questions
-
+> Our main research question was if NC counties with higher concentration of hog farms would have higher health disparities compared to counties with lower hog farm concentrations. To research this, we looked at health and population distribution data for each NC county and specifically looked at data for counties with the highest concentrations of hog farms (Bladen, Duplin, Greene, Sampson, Robeson, Wayne) and comparing them to Durham as we are current residents of this county. We wanted to gain a better understanding of the inequities and environmental justice issues that stem from NC hog farms and pork production economy. 
 
 
 \newpage
@@ -132,3 +143,5 @@ Health_data_transposed_clean_1 <- Health_data_transposed_clean_1 %>%
 
 # References
 <add references here if relevant, otherwise delete this section> 
++ [Environmental Working Group Map - Distribution of Animal Agriculture Farms] <https://www.ewg.org/interactive-maps/2020-fields-of-filth/map/>
++ [NC Farms and Floodplains] <https://sites.tufts.edu/gis/files/2017/06/Moore_Emily_UEP232_2016.pdf>
