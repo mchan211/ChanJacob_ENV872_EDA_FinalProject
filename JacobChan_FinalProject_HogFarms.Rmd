@@ -76,7 +76,8 @@ Health_data_transposed_clean_1 <- Health_data_transposed_clean[-c(1), -c(7,8, 10
 
 #Removing '%' character from the dataframe using the 'gsub' function
 Health_data_transposed_clean_1 <- Health_data_transposed_clean_1 %>%
-  mutate(Child_Population_percentage = as.numeric(gsub("%", "", Child_Population_percentage)),
+  mutate(Population = as.numeric(gsub(",","",Population)),
+         Child_Population_percentage = as.numeric(gsub("%", "", Child_Population_percentage)),
          Elderly_Population_percentage = as.numeric(gsub("%", "", Elderly_Population_percentage)),
          White_Population_percentage = as.numeric(gsub("%", "", White_Population_percentage)),
          Hispanic_Latinx_percentage = as.numeric(gsub("%", "", Hispanic_Latinx_percentage)),
@@ -87,6 +88,9 @@ Health_data_transposed_clean_1 <- Health_data_transposed_clean_1 %>%
          Medicaid_CHIP_enrolles_percentage = as.numeric(gsub("%", "", Medicaid_CHIP_enrolles_percentage)),
          Low_Birthweight_percentage = as.numeric(gsub("%", "", Low_Birthweight_percentage)),
          Poverty_percentage = as.numeric(gsub("%", "", Poverty_percentage)))
+
+#saving wrangled health data in Processed Data folder
+write.csv(Health_data_transposed_clean_1, file = "./Data/Processed/CountyHogs_HealthData.csv")
 
 #Filtering for NC counties from US counties shapefile
 nc_county_sf <- read_sf("./Data/Spatial/cb_2018_us_county_20m.shp") %>%
