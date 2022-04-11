@@ -106,6 +106,9 @@ Health_data_transposed_clean_1 <- Health_data_transposed_clean_1 %>%
 
 #Checking the class of Health_data_transposed_clean_1
 class(Health_data_transposed_clean_1)
+
+#saving wrangled health data in Processed Data folder
+write.csv(Health_data_transposed_clean_1, file = "./Data/Processed/CountyHogs_HealthData.csv")
 ```
 
 Analysis: 
@@ -113,13 +116,10 @@ Analysis:
 ```{r}
 mapviewOptions(fgb = FALSE)
 
-#saving wrangled health data in Processed Data folder
-write.csv(Health_data_transposed_clean_1, file = "./Data/Processed/CountyHogs_HealthData.csv")
 
 #Filtering for NC counties from US counties shapefile
 nc_county_sf <- read_sf("./Data/Spatial/cb_2018_us_county_20m.shp") %>%
   filter(STATEFP == 37) #filter for NC counties
-
 
 #Loading in the shapefile
 NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
@@ -127,11 +127,54 @@ NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/c
 
 
 NorthCarolina_counties_sf <- NorthCarolina_sf %>%
-  filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen"))
+  filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen", "Greene", "Wayne", "Durham"))
 
 mapview(NorthCarolina_counties_sf)
 
+#Loading in the Hog Farm NC locations file 
 
+HogFarm_Locations <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/Hog_Farm_Locations_NC.csv") 
+
+#Selecting the required columns with Lat/Long
+HogFarm_Locations <- HogFarm_Locations %>%
+  select(title, latitude, longitude) %>%
+   na.omit(HogFarm_Locations)
+  
+#Converting the dataframe to a sf (spatial features) dataframe
+HogFarm_Locations_sf <- HogFarm_Locations %>%
+  st_as_sf(coords = c('longitude', 'latitude'),
+           crs = 4269)
+
+colnames(HogFarm_Locations_sf)
+
+
+HogFarm_Locations_plot <-
+ggplot() +
+  geom_sf(data = nc_county_sf, aes(fill = 'turquoise')) +
+  geom_sf(data = HogFarm_Locations_sf, aes(color = 'red'), size = 1) + 
+  scale_fill_identity(name = "", breaks = c("turquoise"), 
+                       labels = c("North Carolina"), guide = "legend") +
+  scale_color_identity(name = "", breaks = c('red'), 
+                       labels = c('Hog Farms'), guide = 'legend') +
+  ggtitle("Hog Farms in North Carolina") +
+  mytheme 
+print(HogFarm_Locations_plot)
+
+
+Intersection <- HogFarm_Locations_sf[NorthCarolina_counties_sf,]
+
+HG <- 
+  ggplot() +
+   geom_sf(data = nc_county_sf, aes(fill = 'pink')) +
+  geom_sf(data = NorthCarolina_counties_sf, aes(fill = 'white')) + 
+  geom_sf(data = Intersection, aes(color = 'red'), size = 0.75) +
+  scale_fill_identity(name = "", breaks = c("pink", "white"), 
+                      labels = c("North Carolina", "Counties with high hog farm populations"), guide = "legend") +
+  scale_color_identity(name = "", breaks = c("red"), 
+                       labels = c("Gage sites"), guide = "legend") +
+  ggtitle("Hog Farms in North Carolina") +
+  mytheme
+print(HG)
 ```
 
 

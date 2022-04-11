@@ -1,0 +1,149 @@
+---
+output: 
+  pdf_document:
+    keep_tex: yes
+    fig_caption: yes
+    number_sections: yes
+geometry: margin=2.54cm
+title: "Insert title of project here"
+subtitle: "Web address for GitHub repository"
+author: "Name"
+fontsize: 12pt
+mainfont: Times New Roman
+
+---
+
+\newpage
+\tableofcontents 
+\newpage
+\listoftables 
+\newpage
+\listoffigures 
+\newpage
+
+```{r setup, include=FALSE}
+# Set your working directory
+getwd()
+
+# Load your packages
+install.packages("tidyverse")
+library(tidyverse)
+install.packages("magrittr")
+library(magrittr)
+install.packages("dplyr")
+library(dplyr)
+install.packages("sf")
+library(sf)
+
+
+# Set your ggplot theme
+mytheme <- theme_classic(base_size = 12) +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "top")
+theme_set(mytheme)
+
+# Load your datasets
+Health_Data_Raw <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/County Health Data 2021.csv", stringsAsFactors = TRUE)
+```
+
+
+
+```{r}
+##Wrangling the dataset 
+
+#Removing columns and rows containing weblinks and other metadata 
+Health_Data_Clean <- Health_Data_Raw[-c(1,2,3),-c(1,3, 4, 5, 6)] 
+
+#Using a pipe to select and rename columns
+Health_Data_Clean <- Health_Data_Clean %>%
+  select(Bold.Indicator.Name.Text, NC, X.9, X.31, X.82, X.78) %>%
+  rename(Indicators = Bold.Indicator.Name.Text, Bladen = X.9, Duplin = X.31, Sampson = X.82, Robeson = X.78)
+
+#Transposing the data
+Health_data_transposed <- t(Health_Data_Clean)
+
+#Converting the transposed data to a dataframe
+Health_data_transposed <- as.data.frame(Health_data_transposed)
+
+#Adding a pipe statement to rename the columns
+Health_data_transposed_clean <- Health_data_transposed %>%
+  rename(Population = 1, Child_Population_percentage = 2, Elderly_Population_percentage = 3, White_Population_percentage = 4, Hispanic_Latinx_percentage = 5, African_American_percentage = 6, American_Indian_percentage = 9, Reading_Proficiency_percentage = 12, Uninsured_Adults_percentage = 14, Medicaid_CHIP_enrolles_percentage = 16, Primary_Care_Physicians = 17, Low_Birthweight_percentage = 32, Infant_Mortality_Rate = 33, Poverty_percentage = 41, Air_Pollution = 52) 
+
+#Selecting the required rows 
+Health_data_transposed_clean_1 <- Health_data_transposed_clean[-c(1), -c(7,8, 10, 11, 13, 15, 18:31, 34:40, 42:51, 53:59)]
+
+#Removing '%' character from the dataframe using the 'gsub' function
+Health_data_transposed_clean_1 <- Health_data_transposed_clean_1 %>%
+  mutate(Child_Population_percentage = as.numeric(gsub("%", "", Child_Population_percentage)),
+         Elderly_Population_percentage = as.numeric(gsub("%", "", Elderly_Population_percentage)),
+         White_Population_percentage = as.numeric(gsub("%", "", White_Population_percentage)),
+         Hispanic_Latinx_percentage = as.numeric(gsub("%", "", Hispanic_Latinx_percentage)),
+         African_American_percentage = as.numeric(gsub("%", "", African_American_percentage)),
+         American_Indian_percentage = as.numeric(gsub("%", "", American_Indian_percentage)),
+         Reading_Proficiency_percentage = as.numeric(gsub("%", "", Reading_Proficiency_percentage)),
+         Uninsured_Adults_percentage = as.numeric(gsub("%", "", Uninsured_Adults_percentage)),
+         Medicaid_CHIP_enrolles_percentage = as.numeric(gsub("%", "", Medicaid_CHIP_enrolles_percentage)),
+         Low_Birthweight_percentage = as.numeric(gsub("%", "", Low_Birthweight_percentage)),
+         Poverty_percentage = as.numeric(gsub("%", "", Poverty_percentage)))
+
+
+#Checking the class of Health_data_transposed_clean_1
+class(Health_data_transposed_clean_1)
+```
+
+Spatial Analysis: 
+
+```{r}
+mapviewOptions(fgb = FALSE)
+
+#Loading in the shapefile
+NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
+  filter(STATEFP == 37)
+
+NorthCarolina_counties_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen"))
+
+mapview(NorthCarolina_counties_sf)
+
+
+```
+
+
+# Rationale and Research Questions
+
+
+
+\newpage
+
+# Dataset Information
+
+
+
+\newpage
+
+# Exploratory Analysis 
+
+
+
+\newpage
+
+# Analysis
+
+
+
+## Question 1: <insert specific question here and add additional subsections for additional questions below, if needed>
+
+## Question 2: 
+
+
+
+
+\newpage
+
+# Summary and Conclusions
+
+
+\newpage
+
+# References
+<add references here if relevant, otherwise delete this section> 
