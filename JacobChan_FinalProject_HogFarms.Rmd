@@ -42,7 +42,7 @@ library(tidyverse)
 library(magrittr)
 #install.packages("dplyr")
 library(dplyr)
-#install.packages("sf")
+install.packages("sf")
 library(sf)
 
 
@@ -70,9 +70,9 @@ Health_Data_Clean <- Health_Data_Raw[-c(1,2,3),-c(1,3, 4, 5, 6)]
 
 #Using a pipe to select and rename columns
 Health_Data_Clean <- Health_Data_Clean %>%
-  select(Bold.Indicator.Name.Text, NC, X.6, X.8, X.30,X.31, X.38, X.39, X.57, X.81, X.77, X.95, X.97) %>%
-  rename(Indicators = Bold.Indicator.Name.Text, Bladen = X.8, Duplin = X.30, Durham = X.31, Greene = X.39, Sampson = X.81, Robeson = X.77, Wayne = X.95, Wilson = X.97, Granville = X.38, Martin = X.57, Beaufort = X.6)
-
+  select(Bold.Indicator.Name.Text, NC, X.8, X.30,X.31, X.39, X.81, X.77, X.95) %>%
+  rename(Indicators = Bold.Indicator.Name.Text, Bladen = X.8, Duplin = X.30, Durham = X.31, Greene = X.39, Sampson = X.81, Robeson = X.77, Wayne = X.95)
+#Durham - 
 
 #Transposing the data
 Health_data_transposed <- t(Health_Data_Clean)
@@ -171,7 +171,7 @@ HG <-
   scale_fill_identity(name = "", breaks = c("pink", "white"), 
                       labels = c("North Carolina", "Counties with high hog farm populations"), guide = "legend") +
   scale_color_identity(name = "", breaks = c("red"), 
-                       labels = c("Gage sites"), guide = "legend") +
+                       labels = c("Locations of Hog Farms"), guide = "legend") +
   ggtitle("Hog Farms in North Carolina") +
   mytheme
 print(HG)
