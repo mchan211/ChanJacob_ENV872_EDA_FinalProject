@@ -21,7 +21,7 @@ library(dplyr)
 
 ## Summary
 
-> The data within this repository includes a shapefile to conduct any spatial analysis as well as raw data files which includes public health and population distribution data per NC county. The purpose of this repository is to examine if there are higher levels of health challenges and disparities within NC with high concentrations of hog farms compared to other NC counties. We will compare racial, health, etc. distributions within North Carolina compared to counties with the highest concentration of hog farms. 
+> The data within this repository includes a shapefile to conduct any spatial analysis, a raw data file which includes public health and population distribution data per NC county, and a data file which includes the spatial locations of hog farms within NC. The purpose of this repository is to examine if there are higher levels of health challenges and disparities within NC with high concentrations of hog farms compared to other NC counties, as well as observe any racial and economic inequities within communities where hog farms are mainly located. We will compare racial, health, etc. distributions within North Carolina compared to counties with the highest concentration of hog farms. 
 
 
 ## Investigators
