@@ -75,12 +75,17 @@ library(sf)
 #install.packages("cowplot")
 library(cowplot)
 
-
-
 # Set your ggplot theme
 mytheme <- theme_classic(base_size = 12) +
   theme(axis.text = element_text(color = "black"), 
-        legend.position = "bottom")
+        legend.position = "bottom",
+        panel.grid = element_blank(),
+        axis.title = element_blank(),
+        axis.text.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        line = element_blank())
 theme_set(mytheme)
 
 # Load your datasets
@@ -156,24 +161,22 @@ summary(nccounties.health)
 ```{r spatial, error = FALSE, message = FALSE}
 mapviewOptions(fgb = FALSE)
 
-
-#Filtering for NC counties from US counties shapefile
-nc_county_sf <- read_sf("./Data/Spatial/cb_2018_us_county_20m.shp") %>%
-  filter(STATEFP == 37) #filter for NC counties
-
-#Loading in the shapefile
+#Loading in the shapefile and filtering for NC counties
 NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
   filter(STATEFP == 37)
 
+#Filtering counties that have a high population of Hog farms
+HighPop_HogFarms_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen", "Greene", "Wayne"))
 
-NorthCarolina_counties_sf <- NorthCarolina_sf %>%
-  filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen", "Greene", "Wayne", "Durham"))
+#Filtering counties that have no or low populations of Hog farms
+LowPop_HogFarms_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Wilson", "Martin", "Beaufort", "Durham", "Warren"))
 
-mapview(NorthCarolina_counties_sf)
 
 #Loading in the Hog Farm NC locations file 
 
-HogFarm_Locations <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/Hog_Farm_Locations_NC.csv") 
+HogFarm_Locations <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/Hog_Farm_Locations_NC1.csv") 
 
 #Selecting the required columns with Lat/Long
 HogFarm_Locations <- HogFarm_Locations %>%
@@ -187,34 +190,77 @@ HogFarm_Locations_sf <- HogFarm_Locations %>%
 
 colnames(HogFarm_Locations_sf)
 
+#Spatial Analysis of Hog Farms in all of NC
 
 HogFarm_Locations_plot <-
 ggplot() +
-  geom_sf(data = nc_county_sf, aes(fill = 'turquoise')) +
-  geom_sf(data = HogFarm_Locations_sf, aes(color = 'red'), size = 1) + 
-  scale_fill_identity(name = "", breaks = c("turquoise"), 
-                       labels = c("North Carolina"), guide = "legend") +
-  scale_color_identity(name = "", breaks = c('red'), 
+  geom_sf(data = NorthCarolina_sf, aes(fill = 'white')) +
+  geom_sf(data = HighPop_HogFarms_sf, aes(fill = 'lightpink')) + 
+  geom_sf(data = LowPop_HogFarms_sf, aes(fill = 'powderblue')) +
+  geom_sf(data = HogFarm_Locations_sf, aes(color = 'blue'), size = 2, shape = 8) +
+  scale_fill_identity(name = "", breaks = c("white", "lightpink", "powderblue"), 
+                       labels = c("North Carolina", "Counties with high populations of Hog Farms", "Counties with zero or low populations of Hog Farms"), guide = "legend") +
+  scale_color_identity(name = "", breaks = c('blue'), 
                        labels = c('Hog Farms'), guide = 'legend') +
   ggtitle("Hog Farms in North Carolina") +
   mytheme 
 print(HogFarm_Locations_plot)
 
 
-Intersection <- HogFarm_Locations_sf[NorthCarolina_counties_sf,]
+#Spatial Analysis of Counties with a High Population of Hog Farms 
 
-HG <- 
-  ggplot() +
-   geom_sf(data = nc_county_sf, aes(fill = 'pink')) +
-  geom_sf(data = NorthCarolina_counties_sf, aes(fill = 'white')) + 
-  geom_sf(data = Intersection, aes(color = 'red'), size = 0.75) +
-  scale_fill_identity(name = "", breaks = c("pink", "white"), 
-                      labels = c("North Carolina", "Counties with high hog farm populations"), guide = "legend") +
-  scale_color_identity(name = "", breaks = c("red"), 
-                       labels = c("Locations of Hog Farms"), guide = "legend") +
-  ggtitle("Hog Farms in North Carolina") +
+HighPop_HogFarms_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen", "Greene", "Wayne"))
+
+
+Robeson_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Robeson"))
+
+
+Sampson_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Sampson"))
+
+Duplin_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Duplin"))
+
+
+Bladen_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Bladen"))
+
+Greene_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Greene"))
+
+
+Wayne_sf <- NorthCarolina_sf %>%
+  filter(NAME %in% c("Wayne"))
+
+#Finding out the no. of hog farms in each county
+Inter_Rob <- HogFarm_Locations_sf[Robeson_sf,]
+Inter_Sam <- HogFarm_Locations_sf[Sampson_sf,]
+Inter_Dup <- HogFarm_Locations_sf[Duplin_sf,]
+Inter_Blad <- HogFarm_Locations_sf[Bladen_sf,]
+Inter_Greene <- HogFarm_Locations_sf[Greene_sf,]
+
+
+Intersection <- HogFarm_Locations_sf[HighPop_HogFarms_sf,] 
+ 
+HighPop <-
+ggplot() +
+  geom_sf(data = Robeson_sf, aes(fill = 'lavender')) + 
+  geom_sf(data = Sampson_sf, aes(fill = 'lightblue1')) +
+  geom_sf(data = Duplin_sf, aes(fill = 'palegreen')) +
+  geom_sf(data = Bladen_sf, aes(fill = 'thistle1')) +
+  geom_sf(data = Greene_sf, aes(fill = 'lightyellow1')) +
+  geom_sf(data = Wayne_sf, aes(fill = 'rosybrown1')) +
+  geom_sf(data = Intersection, aes(color = 'blue'), size = 2, shape = 8) +
+  scale_fill_identity(name = "", breaks = c("lavender", "lightblue1", "palegreen", "thistle1", "lightyellow1", "rosybrown1"),
+                      labels = c('Robeson', 'Sampson', 'Duplin', 'Bladen', 'Greene', 'Wayne'),
+                      guide = "legend") +
+    scale_color_identity(name = "", breaks = c("blue"), labels = c("Hog Farm Locations"), guide = "legend") +
+  ggtitle("NC counties with high populations of Hog Farms") +
   mytheme
-print(HG)
+print(HighPop)
+
 ```
 
 \newpage
