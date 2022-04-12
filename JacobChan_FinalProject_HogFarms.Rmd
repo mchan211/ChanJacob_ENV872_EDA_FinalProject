@@ -5,9 +5,9 @@ output:
     fig_caption: yes
     number_sections: yes
 geometry: margin=2.54cm
-title: "Insert title of project here"
-subtitle: "Web address for GitHub repository"
-author: "Name"
+title: "Pigs, Poop, and Public Health"
+subtitle: "https://github.com/mchan211/ChanJacob_ENV872_EDA_FinalProject.git"
+author: "Natasha Jacob and Meilin Chan"
 fontsize: 12pt
 mainfont: Times New Roman
 
@@ -43,12 +43,19 @@ mainfont: Times New Roman
 \newpage
 
 # Rationale and Research Questions
-> Our main research question was if NC counties with higher concentration of hog farms would have higher health disparities compared to counties with lower hog farm concentrations. To research this, we looked at health and population distribution data for each NC county and specifically looked at data for counties with the highest concentrations of hog farms (Bladen, Duplin, Greene, Sampson, Robeson, Wayne) and comparing them to Durham as we are current residents of this county. We wanted to gain a better understanding of the inequities and environmental justice issues that stem from NC hog farms and pork production economy. 
+> Our main research question was if NC counties with higher concentration of hog farms would have higher health disparities compared to counties with lower hog farm concentrations. NC Hog farms dispose of pig poop by collecting enormous amounts of pig pools into lagoons and spraying the liquidy mixture out onto fields. As you can imagine, the fine mist can travel some distance and has led to strong odors and health impacts of neighboring communities. We were interested in seeing the distribution of populations near where hog farms are concentrated as well as if there were any disparities in health and health access. To research this, we looked at health and population distribution data for each NC county and specifically looked at data for counties with the highest concentrations of hog farms (Bladen, Duplin, Greene, Sampson, Robeson, Wayne) and comparing them to counties with low concentrations or no hog farms (Durham - as we are current residents of this county, Beaufort - as this is part of Duke's community, Martin, Wilson, and Warren). We wanted to gain a better understanding of the inequities and environmental justice issues that stem from NC hog farms and pork production economy. 
 
 \newpage
 
 # Dataset Information
-> Our dataset is...........
+> Our core analysis revolves around the use of spatial datasets and a dataset containing population distribution and health data for each NC county.
+
+* Spatial Data
+  + [NAME]
+  + [NAME]
+* Visualization Data
+  + CountyHogs_HealthData.csv
+
 
 \newpage
 
@@ -65,6 +72,8 @@ library(magrittr)
 library(dplyr)
 #install.packages("sf")
 library(sf)
+#install.packages("cowplot")
+library(cowplot)
 
 
 
@@ -129,11 +138,11 @@ Health_data_transposed_clean_1 <- Health_data_transposed_clean_1 %>%
 class(Health_data_transposed_clean_1)
 
 #saving wrangled health data in Processed Data folder
-write.csv(Health_data_transposed_clean_1, file = "./Data/Processed/CountyHogs_HealthData.csv")
+write.csv(Health_data_transposed_clean_1, file = "./Data/Processed/projectNCcounties_HealthData.csv")
 ```
 
 ```{r health data frame, echo = FALSE, message = FALSE, error = FALSE}
-nccounties.health <- read.csv("./Data/Processed/CountyHogs_HealthData.csv", stringsAsFactors = FALSE)
+nccounties.health <- read.csv("./Data/Processed/projectNCcounties_HealthData.csv", stringsAsFactors = FALSE)
 
 print(nccounties.health)
 colnames(nccounties.health)
@@ -144,7 +153,7 @@ summary(nccounties.health)
 
 ##Spatial Analysis
 
-```{r}
+```{r spatial, error = FALSE, message = FALSE}
 mapviewOptions(fgb = FALSE)
 
 
@@ -213,39 +222,46 @@ print(HG)
 ##Visualization Analysis
 ###Population
 ```{r ggplots population, include = FALSE, message = FALSE, error = FALSE}
-nccounties.health <- read.csv("./Data/Processed/CountyHogs_HealthData.csv", stringsAsFactors = FALSE)
-
 nccounties.health <- nccounties.health %>% filter(X != "NC")
 
-#library(ggplot2)
-#library(cowplot)
 
 #POPULATION DISTRIBUTION
-NC.pop.distribution <- ggplot(nccounties.health) +
-  geom_col(aes(x = X, y = Population, fill = X)) +
+NC.pop.distribution <- ggplot(nccounties.health, 
+                              aes(reorder(X, Population), 
+                                  Population, fill = X)) +
+  geom_col() +
   xlab("") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
+NC.pop.distribution
 
-w.pop.distribution <- ggplot(nccounties.health) +
-  geom_col(aes(x= X, y= White_Population_percentage, fill = X)) +
+w.pop.distribution <- ggplot(nccounties.health, 
+                             aes(reorder(X, White_Population_percentage), 
+                                 White_Population_percentage, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("White") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-aa.pop.distribution <- ggplot(nccounties.health) +
-  geom_col(aes(x= X, y= African_American_percentage, fill = X)) +
+aa.pop.distribution <- ggplot(nccounties.health, 
+                              aes(reorder(X, African_American_percentage),
+                                  African_American_percentage, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("African American")+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-h.pop.distribution <- ggplot(nccounties.health) +
-  geom_col(aes(x= X, y= Hispanic_Latinx_percentage, fill = X)) +
+h.pop.distribution <- ggplot(nccounties.health,
+                             aes(reorder(X, Hispanic_Latinx_percentage),
+                                 Hispanic_Latinx_percentage, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("Hispanic/Latinx")+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-i.pop.distribution <- ggplot(nccounties.health) +
-  geom_col(aes(x= X, y= American_Indian_percentage, fill = X)) +
+i.pop.distribution <- ggplot(nccounties.health, 
+                             aes(reorder(X, American_Indian_percentage),
+                                 American_Indian_percentage, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("Indigenous/Native American")+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
@@ -275,19 +291,23 @@ pop.plot.complete <- plot_grid(pop.title, pop.plot,
 pop.plot.complete
 
 ```
-
+\newpage
 
 ###Chronic Illness
 ```{r ggplots disease, include = FALSE, message = FALSE, error = FALSE}
 #Chronic Health
-cancer.plot <- ggplot(nccounties.health) +
-  geom_col(aes(x = X, y = Cancer_Incidence, fill = X)) +
+cancer.plot <- ggplot(nccounties.health, 
+                      aes(reorder(X, Cancer_Incidence),
+                          Cancer_Incidence, fill = X)) +
+  geom_col() +
   xlab("")+
   ylab("Cancer Incidence Rates per 100,000 pop.")+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-heart.plot <- ggplot(nccounties.health) +
-  geom_col(aes(x=X, y= Heart_Disease, fill = X)) +
+heart.plot <- ggplot(nccounties.health,
+                     aes(reorder(X, Heart_Disease),
+                         Heart_Disease, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("Heart Disease Deaths per 100,000 pop.")+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
@@ -296,7 +316,6 @@ heart.plot <- ggplot(nccounties.health) +
 ```{r disease final, echo = FALSE, message = FALSE, error = FALSE}
 chronic.disease.plot <- plot_grid(cancer.plot + theme(legend.position = "none"),
                                   heart.plot + theme(legend.position = "none"),
-                                  phys.plot + theme(legend.position = "none"),
                                   nrow = 1,
                                   align = 'hv')
 disease.title <- ggdraw() +
@@ -310,35 +329,45 @@ chronic.disease.complete <- plot_grid(disease.title, chronic.disease.plot,
                                       ncol = 1, rel_heights = c(0.1, 1))
 chronic.disease.complete
 ```
-
+\newpage
 ###Health Challenge Indicators
 ```{r, health plot, include = FALSE, message = FALSE, error = FALSE}
-phys.plot <- ggplot(nccounties.health) +
-  geom_col(aes(x = X, y = Primary_Care_Physicians, fill = X)) +
+phys.plot <- ggplot(nccounties.health,
+                    aes(reorder(X, Primary_Care_Physicians),
+                        Primary_Care_Physicians, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("Physicians per 10,000 pop.")+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-pov.plot <- ggplot(nccounties.health) +
-  geom_col(aes(x = X, y = Poverty_percentage, fill = X)) +
+pov.plot <- ggplot(nccounties.health,
+                   aes(reorder(X, Poverty_percentage),
+                       Poverty_percentage, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("% Individ. Living in Poverty") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
   
-air.plot <- ggplot(nccounties.health) +
-  geom_col(aes(x = X, y = Air_Pollution, fill = X)) +
+air.plot <- ggplot(nccounties.health,
+                   aes(reorder(X, Air_Pollution),
+                       Air_Pollution, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("Avg. Daily Density of PM (u/m3)") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-uninsured.plot <- ggplot(nccounties.health) +
-  geom_col(aes(x = X, y = Uninsured_Adults_percentage, fill = X)) +
+uninsured.plot <- ggplot(nccounties.health,
+                         aes(reorder(X, Uninsured_Adults_percentage),
+                             Uninsured_Adults_percentage, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("% Uninsured Adults") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-medicaid.plot <- ggplot(nccounties.health) +
-  geom_col(aes(x = X, y = Medicaid_CHIP_enrolles_percentage, fill = X)) +
+medicaid.plot <- ggplot(nccounties.health, 
+                        aes(reorder(X, Medicaid_CHIP_enrolles_percentage),
+                            Medicaid_CHIP_enrolles_percentage, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("% Pop. Enrolled in Medicaid") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
@@ -346,13 +375,18 @@ medicaid.plot <- ggplot(nccounties.health) +
 ```
 
 ```{r, final health, echo = FALSE, message = FALSE, error = FALSE}
-health.plot.1 <- plot_grid (phys.plot + theme(legend.position = "none"),
-                          pov.plot + theme(legend.position = "none"),
-                          air.plot + theme(legend.position = "none"),
+health.plot.1 <- plot_grid (phys.plot + theme(legend.position = "none",
+                                              axis.title = element_text(size = 7)),
+                          pov.plot + theme(legend.position = "none",
+                                           axis.title = element_text(size = 7)),
+                          air.plot + theme(legend.position = "none",
+                                           axis.title = element_text(size = 7)),
                           ncol = 3,
                           align = 'hv')
-health.plot.2 <- plot_grid( uninsured.plot + theme(legend.position = "none"),
-                          medicaid.plot + theme(legend.position = "none"),
+health.plot.2 <- plot_grid( uninsured.plot + theme(legend.position = "none",
+                                                   axis.title = element_text(size = 7)),
+                          medicaid.plot + theme(legend.position = "none",
+                                                axis.title = element_text(size = 7)),
                           ncol = 2,
                           align = 'hv')
 
@@ -367,21 +401,25 @@ health.title <- ggdraw() +
   theme(plot.margin = margin (0,0,0,7))
 
 health.plot.final <- plot_grid(health.title, health.plot,
-                               ncol = 1, rel_heights = c(0.1, 1))
+                               nrow = 2, rel_heights = c(0.1, 1))
 health.plot.final
 
 ```
-
+\newpage
 ###Infant Health
 ```{r infant plots, include = FALSE, message = FALSE, error = FALSE}
-birthweight.plot <- ggplot(nccounties.health) +
-  geom_col(aes(x = X, y = Low_Birthweight_percentage, fill = X)) +
+birthweight.plot <- ggplot(nccounties.health,
+                           aes(reorder(X, Low_Birthweight_percentage),
+                               Low_Birthweight_percentage, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("% newborns under 2.5kg")+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-mortality.plot <- ggplot(nccounties.health) +
-  geom_col(aes(x= X, y = Infant_Mortality_Rate, fill = X)) +
+mortality.plot <- ggplot(nccounties.health,
+                         aes(reorder(X, Infant_Mortality_Rate),
+                             Infant_Mortality_Rate, fill = X)) +
+  geom_col() +
   xlab("") +
   ylab("Infant Death Rates per 1,000 births")+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
@@ -403,6 +441,47 @@ infant.title <- ggdraw() +
 infant.plot.final <- plot_grid(infant.title, infant.plot,
                                ncol = 1, rel_heights = c(0.1, 1))
 infant.plot.final
+
+```
+
+\newpage
+###Vulnerable Populations
+```{r vulnerable, include = FALSE, message = FALSE, error = FALSE}
+
+chil.plot <- ggplot(nccounties.health,
+                           aes(reorder(X, Child_Population_percentage),
+                               Child_Population_percentage, fill = X)) +
+  geom_col() +
+  xlab("") +
+  ylab("% Population < 18 Years")+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+el.plot <- ggplot(nccounties.health,
+                           aes(reorder(X, Elderly_Population_percentage),
+                               Elderly_Population_percentage, fill = X)) +
+  geom_col() +
+  xlab("") +
+  ylab("% Population 65+ Years")+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+```
+
+```{r vulnerable final, echo = FALSE, mesage = FALSE, error = FALSE}
+
+vul.plot <- plot_grid(chil.plot + theme(legend.position = "none"),
+                      el.plot + theme(legend.position = "none"),
+                      ncol = 2,
+                      align = 'hv')
+vul.title <- ggdraw() +
+  draw_label("Vulnerable Populations",
+             fontface='bold',
+             x = 0,
+             hjust = 0) +
+  theme(plot.margin = margin (0,0,0,7))
+
+vul.plot.final <- plot_grid(vul.title, vul.plot,
+                            ncol = 1, rel_heights = c(0.1, 1))
+vul.plot.final
 
 ```
 
@@ -428,5 +507,6 @@ infant.plot.final
 
 # References
 
-+ [Environmental Working Group Map - Distribution of Animal Agriculture Farms] <https://www.ewg.org/interactive-maps/2020-fields-of-filth/map/>
-+ [NC Farms and Floodplains] <https://sites.tufts.edu/gis/files/2017/06/Moore_Emily_UEP232_2016.pdf>
+* [Environmental Working Group Map - Distribution of Animal Agriculture Farms] <https://www.ewg.org/interactive-maps/2020-fields-of-filth/map/>
+* [NC Farms and Floodplains] <https://sites.tufts.edu/gis/files/2017/06/Moore_Emily_UEP232_2016.pdf>
+* [Democracy Now! Video on NC Hog Farms] <https://www.youtube.com/watch?v=eyAFNV4Afgw>
