@@ -251,7 +251,7 @@ ggplot() +
   ggtitle("NC counties with high populations of Hog Farms") +
   mytheme
 print(HighPop)
-  
+
 ```
 
 \newpage
