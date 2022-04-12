@@ -66,8 +66,6 @@ library(dplyr)
 #install.packages("sf")
 library(sf)
 
-
-
 # Set your ggplot theme
 mytheme <- theme_classic(base_size = 12) +
   theme(axis.text = element_text(color = "black"), 
@@ -80,9 +78,6 @@ mytheme <- theme_classic(base_size = 12) +
         axis.ticks.y = element_blank(),
         line = element_blank())
 theme_set(mytheme)
-
-
-
 
 # Load your datasets
 Health_Data_Raw <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/County Health Data 2021.csv", stringsAsFactors = TRUE)
@@ -195,7 +190,7 @@ ggplot() +
   geom_sf(data = LowPop_HogFarms_sf, aes(fill = 'powderblue')) +
   geom_sf(data = HogFarm_Locations_sf, aes(color = 'blue'), size = 2, shape = 8) +
   scale_fill_identity(name = "", breaks = c("white", "lightpink", "powderblue"), 
-                       labels = c("North Carolina", "Counties with High populations of Hog Farms", "Counties with none or low Populations of Hog Farms"), guide = "legend") +
+                       labels = c("North Carolina", "Counties with high populations of Hog Farms", "Counties with zero or low populations of Hog Farms"), guide = "legend") +
   scale_color_identity(name = "", breaks = c('blue'), 
                        labels = c('Hog Farms'), guide = 'legend') +
   ggtitle("Hog Farms in North Carolina") +
@@ -229,6 +224,14 @@ Greene_sf <- NorthCarolina_sf %>%
 
 Wayne_sf <- NorthCarolina_sf %>%
   filter(NAME %in% c("Wayne"))
+
+#Finding out the no. of hog farms in each county
+Inter_Rob <- HogFarm_Locations_sf[Robeson_sf,]
+Inter_Sam <- HogFarm_Locations_sf[Sampson_sf,]
+Inter_Dup <- HogFarm_Locations_sf[Duplin_sf,]
+Inter_Blad <- HogFarm_Locations_sf[Bladen_sf,]
+Inter_Greene <- HogFarm_Locations_sf[Greene_sf,]
+
 
 Intersection <- HogFarm_Locations_sf[HighPop_HogFarms_sf,] 
  
