@@ -72,11 +72,12 @@ library(dplyr)
 ## Metadata
 
 ```{r metadata info, echo = FALSE, message=FALSE, warning=FALSE}
-countyhealth <- read.csv("../Data/Processed/Health_data_transposed_clean_1.csv", stringsAsFactors = TRUE)
+countyhealth <- read.csv("../Data/Processed/CountyHogs_HealthData.csv", stringsAsFactors = TRUE)
 
 colnames(countyhealth)
 
 ```
+###CountyHogs_HealthData.csv
 |             Column Name               |     Description - all per county     |
 |:-------------------------------------:|:------------------------------------:|
 |    Population                         |   Total population                   |
@@ -89,9 +90,11 @@ colnames(countyhealth)
 |    Reading_Proficiency_percentage     |   % literacy rate per county         |
 |    Uninsured_Adults_percentage        |   % adults w/out health insurance    |
 |    Medicaid_CHIP_enrolles_percentage  |   % individ. w/ Medicaid or CHIP     |
-|    Primary_Care_Physicians            |   ?ratio of physicians to population?|
+|    Primary_Care_Physicians            |   Physicians per 10,000 pop.         |
 |    Low_Birthweight_percentage         |   % of low birth weight occurrences  |
 |    Infant_Mortality_Rate              |   % rate of infant mortality         |
+|    Cancer_Incidence                   |   Incidence rates per 100,000 pop.   |
+|    Heart_Disease                      |   Death rates per 100,000 pop.       |
 |    Poverty_percentage                 |   % of pop. living under poverty line|
 |    Air_Pollution                      |   avg. daily density of PM (ug/m3)   |
 
