@@ -66,19 +66,6 @@ library(dplyr)
 #install.packages("sf")
 library(sf)
 
-# Set your ggplot theme
-mytheme <- theme_classic(base_size = 12) +
-  theme(axis.text = element_text(color = "black"), 
-        legend.position = "bottom",
-        panel.grid = element_blank(),
-        axis.title = element_blank(),
-        axis.text.y = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        line = element_blank())
-theme_set(mytheme)
-
 # Load your datasets
 Health_Data_Raw <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/County Health Data 2021.csv", stringsAsFactors = TRUE)
 
@@ -151,6 +138,20 @@ summary(nccounties.health)
 
 ```{r}
 mapviewOptions(fgb = FALSE)
+
+# Set your ggplot theme
+mytheme <- theme_classic(base_size = 12) +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "bottom",
+        panel.grid = element_blank(),
+        axis.title = element_blank(),
+        axis.text.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        line = element_blank())
+theme_set(mytheme)
+
 
 #Loading in the shapefile and filtering for NC counties
 NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
