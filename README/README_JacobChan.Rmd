@@ -58,7 +58,9 @@ library(dplyr)
   *Data = stores all data used in the project
     * Raw = raw data, unwrangled
     * Processed = wrangled data
+    * Spatial = spatial analysis data
   * README = folder containing the template and project-specific version of README which provides background and overview of the repository and purpose of the project.
+  * Spatial Images = contains saved images of spatial analysis results
 
 + Types of files
   *.csv = for wrangling and creation of dataframes for ggplot visualizations and other analyses
