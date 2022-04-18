@@ -71,13 +71,34 @@ library(dplyr)
 
 ## Metadata
 
-```{r metadata info, echo = FALSE, message=FALSE, warning=FALSE}
-countyhealth <- read.csv("../Data/Processed/CountyHogs_HealthData.csv", stringsAsFactors = TRUE)
+### Raw Folder
+> We wrangled the original County Health Data 2021.xlsx into County Health Data 2021.csv file for easier access with manipulating the dataset.The County Health Data 2021.csv file has 62 rows and 109 columns. The class of all the columns is a factor. The dataframe contains descriptions for each row (Bold.Indicator.Name.Text) in the Indicator.Descriptor.Text and Source.Label columns. 
 
-colnames(countyhealth)
+```{r raw info, echo = FALSE, message = FALSE, warning = FALSE}
+
+countyraw <- read.csv("../Data/Raw/County Health Data 2021.csv", stringsAsFactors = TRUE)
+
+summary(countyraw)
+dim(countyraw)
+class(countyraw)
 
 ```
-###CountyHogs_HealthData.csv
+
+
+### Processed
+> The projectNCcounties_HealthData.csv file is our wrangled dataframe in which we conducted analysis on. We wrangled all the columns with filtered into our processed dataset into the numerical class. 
+
+```{r processed info, echo = FALSE, message=FALSE, warning=FALSE}
+countyhealth <- read.csv("../Data/Processed/projectNCcounties_HealthData.csv", stringsAsFactors = TRUE)
+
+summary(countyhealth)
+
+dim(countyhealth)
+
+class(countyhealth)
+
+```
+
 |             Column Name               |     Description - all per county     |
 |:-------------------------------------:|:------------------------------------:|
 |    Population                         |   Total population                   |
@@ -98,20 +119,17 @@ colnames(countyhealth)
 |    Poverty_percentage                 |   % of pop. living under poverty line|
 |    Air_Pollution                      |   avg. daily density of PM (ug/m3)   |
 
+### Spatial
+> 
 
 <For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.> 
 
 ## Scripts and code
-
-<list any software scripts/code contained in the repository and a description of their purpose.>
+> No scripts or code are contained in our repository.
 
 ## Quality assurance/quality control
+> We sourced our data from reputible sources such as Google Maps, the Environmental_Data_Analytics_2022 GitHub, and the North Carolina Institute of Medicine. To ensure high quality of consistancy in our data, we kept organized unwrangled data in a Raw folder, dataframes we had wrangled and saved in a Processed folder, and any data used with spatial analysis into a Spatial folder. We renamed our data files using names that would provide users a general idea of what the data contained. We never wrangled or edited the Raw data files, and agreed to only save wrangled data that would be used widely in our analyses. All our data and project files were saved and backed up to our GitHub repository which we pulled from at the beginning of each session, and pushed to at the end of each session. 
 
-<describe any relevant QA/QC procedures taken with your data. Some ideas can be found here:>
-<https://www.dataone.org/best-practices/develop-quality-assurance-and-quality-control-plan>
-<https://www.dataone.org/best-practices/ensure-basic-quality-control>
-<https://www.dataone.org/best-practices/communicate-data-quality>
-<https://www.dataone.org/best-practices/identify-outliers>
-<https://www.dataone.org/best-practices/identify-values-are-estimated>
+
 
 
