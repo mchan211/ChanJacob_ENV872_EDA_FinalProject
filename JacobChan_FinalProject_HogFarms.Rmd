@@ -31,7 +31,6 @@ mainfont: Times New Roman
 #List of Tables
 * NC County Health Distribution
 
-
 \newpage
 #List of Figures
 * [MAP NAME]
@@ -80,7 +79,7 @@ Health_Data_Raw <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/Count
 
 ```
 
-# Exploratory Analysis 
+# Analysis 
 
 ##Data Table - NC County Health Distribution
 
@@ -539,16 +538,20 @@ vul.plot.final
 #Analysis
 
 
-## Question 1: 
+## Question 1: Which NC counties have the highest concentration of hog farms?
+>
 
-## Question 2: 
+## Question 2: Are hog farms more prevelant in communities with higher BIPOC populations?
+>
 
+## Question 3: What health inequities are most prevelant in counties with  high concentratiosn of hog farms?
+>
 
 
 \newpage
 
 # Summary and Conclusions
-
+> Inequities in access to health 
 
 \newpage
 
