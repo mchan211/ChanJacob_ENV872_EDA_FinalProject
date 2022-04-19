@@ -78,7 +78,7 @@ library(dplyr)
 
 ```{r raw info, echo = FALSE, message = FALSE, warning = FALSE}
 
-countyraw <- read.csv("../Data/Raw/County Health Data 2021.csv", stringsAsFactors = TRUE)
+countyraw <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/County Health Data 2021.csv", stringsAsFactors = TRUE)
 
 summary(countyraw)
 dim(countyraw)
@@ -91,7 +91,7 @@ class(countyraw)
 > The projectNCcounties_HealthData.csv file is our wrangled dataframe in which we conducted analysis on. We wrangled all the columns with filtered into our processed dataset into the numerical class. 
 
 ```{r processed info, echo = FALSE, message=FALSE, warning=FALSE}
-countyhealth <- read.csv("../Data/Processed/projectNCcounties_HealthData.csv", stringsAsFactors = TRUE)
+countyhealth <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Processed/projectNCcounties_HealthData.csv", stringsAsFactors = TRUE)
 
 summary(countyhealth)
 
@@ -122,7 +122,61 @@ class(countyhealth)
 |    Air_Pollution                      |   avg. daily density of PM (ug/m3)   |
 
 ### Spatial
-> 
+
+> For the spatial analysis component of our project, we used the Cartographic Boundary shapefile (cb_2018_us_county_20m.shp) to map North Carolina and its counties. The cartographic boundary files are simplified representations of selected geographic areas from the Census Bureau’s MAF/TIGER geographic database. These boundary files are specifically designed for small scale thematic mapping. We used 2018 data year shapefile with a resolution level of 20m. The shapefile contains information regarding geographic features of all US states. For our project, we were only interested in the counties located in North Carolina, hence, we filtered the shapefile to provide geographic information of the counties located in North Carolina. The attributes present in the county shapefile are the geographic coordinates, area of land and water, state and county FIPS codes, the American National Standards Institute (ANSI) codes, GEOIDs, names of the counties and legal/statistical area description codes. 
+
+```{r}
+library(sf)
+NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
+  filter(STATEFP == 37)
+
+colnames(NorthCarolina_sf)
+
+class(NorthCarolina_sf)
+
+summary(NorthCarolina_sf)
+```
+
+|     Column Name       |                         Description                                        |
+|:---------------------:|:--------------------------------------------------------------------------:|
+|  STATEFP              |   Federal Information Processing Standards (FIPS) code for North Carolina  |
+|  COUNTYFP             |   FIPS code for each county in North Carolina                              |
+|  COUNTYNS             |   American National Standards Institute (ANSI) code for the county         |
+|  AFFGEOID             |   American FactFinder geographic identifier                                |
+|  GEOID                |   A concatenation of current state FIPS code and county FIPS code          |
+|  NAME                 |   Names of counties in North Carolina                                      |
+|  LSAD                 |   Legal and statistical area description codes                             |
+|  ALAND                |   Current land area (in square meters)                                     |
+|  AWATER               |   Current water area (in square meters)                                    |
+|  geometry             |   Geographic coordinates of counties in North Carolina                     |
+
+
+> The Hog_Farm_Locations_NC.csv file contains locations of Hog Farms present in North Carolina. The coordinates of Hog Farm Locations were obtained from Google Maps. Phantom Buster - a web application used for extracting data from websites was used to extract coordinates of Hog Farms from Google Maps. The coordinates were converted to a spatial features dataset inorder to map them with the counties dataset. 
+
+```{r}
+HogFarm_Locations <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/Hog_Farm_Locations_NC1.csv") 
+
+#Selecting the required columns
+HogFarm_Locations <- HogFarm_Locations %>%
+  select(title, latitude, longitude) %>%
+   na.omit(HogFarm_Locations)
+  
+#Converting the dataframe to a sf (spatial features) dataframe
+HogFarm_Locations_sf <- HogFarm_Locations %>%
+  st_as_sf(coords = c('longitude', 'latitude'),
+           crs = 4269)
+
+colnames(HogFarm_Locations_sf)
+
+class(HogFarm_Locations_sf)
+
+summary(HogFarm_Locations_sf)
+```
+
+|    Column Name     |             Description                   | 
+|:------------------:|:-----------------------------------------:|
+|  title             |  Names of Hog Farms                       |
+|  geometry          |  Geographic coordinates of the Hog Farms  |
 
 <For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.> 
 
