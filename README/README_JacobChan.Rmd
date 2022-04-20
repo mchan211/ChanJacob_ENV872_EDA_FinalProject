@@ -41,13 +41,15 @@ library(dplyr)
   + Source: [NCIOM Data] <https://nciom.org/nc-health-data/map/?msclkid=9e415084b5bb11ec86c6f367b7f93e6c>  
   + accessed: April 6, 2022
   
-* County Health Data 2021.csv (Process folder)
+* County Health Data 2021.csv (Processed folder)
   + Source: wrangled County Health Data 2021.xlsx to csv format
   
-* cb_2019_us_county_20m.shp (Raw folder)
+* cb_2019_us_county_20m.shp (Spatial folder)
   + Source: Environmental_Data_Analytics_2022 Class GitHub Repository (Folder: Data/Spatial)
 
-
+* Hog_Farm_Locations_NC1.csv (Spatial folder)
+  + Source: Google maps
+  
 ## Folder structure, file formats, and naming conventions 
 + Folders
   *Data = stores all data used in the project
@@ -172,8 +174,6 @@ summary(HogFarm_Locations_sf)
 |:------------------:|:-----------------------------------------:|
 |  title             |  Names of Hog Farms                       |
 |  geometry          |  Geographic coordinates of the Hog Farms  |
-
-<For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.> 
 
 ## Scripts and code
 > JacobChan_FinalProject_HogFarms.Rmd - Code for wrangling data, spatial and graphical visualization analysis 
