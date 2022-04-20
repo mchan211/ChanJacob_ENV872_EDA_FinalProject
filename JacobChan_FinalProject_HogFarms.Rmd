@@ -188,10 +188,6 @@ summary(nccounties.health)
 # Data Analysis 
 ## Spatial Analysis
 
-<<<<<<< HEAD
-```{r spatial, error = FALSE, message = FALSE}
-#mapviewOptions(fgb = FALSE)
-=======
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 #Loading in the shapefile and filtering for NC counties
 NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
@@ -394,6 +390,8 @@ pop.plot.complete <- plot_grid(pop.title, pop.plot,
 pop.plot.complete
 
 ```
+>Figure 3. Bar graph of various population distributions within each county
+
 \newpage
 
 **Chronic Health Incidence Rates**
@@ -430,6 +428,8 @@ chronic.disease.complete <- plot_grid(disease.title, chronic.disease.plot,
                                       ncol = 1, rel_heights = c(0.1, 1))
 chronic.disease.complete
 ```
+> Figure 4. Bar graph showing incidence rates of heart disease and cancer within each county
+
 \newpage
 
 **Health Risk Indicators**
@@ -505,6 +505,8 @@ health.plot.final <- plot_grid(health.title, health.plot,
 health.plot.final
 
 ```
+> Figure 5. Bar graph of various health risk indicators within each county
+
 
 \newpage
 
@@ -543,6 +545,8 @@ infant.plot.final <- plot_grid(infant.title, infant.plot,
 infant.plot.final
 
 ```
+> Figure 6. Bar graph of infant mortality and low birthweight risk within each county
+
 
 \newpage
 
@@ -583,7 +587,7 @@ vul.plot.final <- plot_grid(vul.title, vul.plot,
 vul.plot.final
 
 ```
-
+> Figure 7. Bar graph of the distribution of vulnerable populations within each county
 
 \newpage
 
@@ -603,11 +607,11 @@ vul.plot.final
 
 **Question 2: Are hog farms more prevelant in communities with higher BIPOC populations?**
 
-> Counties with higher concentrations of hog farms tend to have a higher distribution of Hispanic/Latinx and Native American communities compared to counties with low concentrations of or no hog farms. In particular, Robeson county has the highest proportion of Native American individuals compared to all the other counties we analyzed. Sampson and Duplin have the highest number of hog farms compared to all the counties we identified, and also has the highest proportion of Hispanic/Latinx individuals compared to the counties we analyzed. 
+> Counties with higher concentrations of hog farms tend to have a higher distribution of Hispanic/Latinx and Native American communities compared to counties with low concentrations of or no hog farms (Figure 3). In particular, Robeson county has the highest proportion of Native American individuals compared to all the other counties we analyzed. Sampson and Duplin have the highest number of hog farms compared to all the counties we identified, and also has the highest proportion of Hispanic/Latinx individuals compared to the counties we analyzed. 
 
-**Question 3: What health inequities are most prevalant in counties with  high concentrations of hog farms?**
+**Question 3: What health inequities are most prevalent in counties with  high concentrations of hog farms?**
 
-> Counties with high concentrations of hog farms tended to have lower number of physicians per 10,000 people compared to the other counties we observed. Further, these counties also had higher % of adults without health insurance. Robeson county, which also had the highest distribution of Native American individuals, also had the highest % of its population living in poverty. Counties with higher concentrations of hog farms also had slightly higher air PM density measurements - it should be noted that Durham is considered metropolitan compared to the other analyzed counties and thus would have a higher average density of PM. The counties with the highest concentrations of hog farms in particular (Sampson, Duplin) has a population where a quarter is under 18 years old which is a population vulnerable to environmental health impacts. 
+> Counties with high concentrations of hog farms tended to have lower number of physicians per 10,000 people compared to the other counties we observed (Figure 5). Further, these counties also had higher % of adults without health insurance. Robeson county, which also had the highest distribution of Native American individuals, also had the highest % of its population living in poverty (Figure 5). Counties with higher concentrations of hog farms also had slightly higher air PM density measurements - it should be noted that Durham is considered metropolitan compared to the other analyzed counties and thus would have a higher average density of PM. The counties with the highest concentrations of hog farms in particular (Sampson, Duplin) has a population where a quarter is under 18 years old which is a population vulnerable to environmental health impacts (Figure 7). 
 
 
 \newpage
