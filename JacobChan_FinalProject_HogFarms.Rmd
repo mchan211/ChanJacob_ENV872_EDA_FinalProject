@@ -23,6 +23,7 @@ mainfont: Times New Roman
 - Analysis 
   - Spatial Analysis
   - Visualization Analysis
+- Results and Discussion
 - Summary and Conclusions
 - Resources
 
@@ -616,6 +617,8 @@ vul.plot.final
 > Figure 7. Vulnerable Populations
 
 \newpage
+
+# Results and Discussion 
 
 **Question 1: Which NC counties have the highest concentration of hog farms?**
 
