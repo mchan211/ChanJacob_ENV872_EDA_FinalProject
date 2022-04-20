@@ -14,33 +14,36 @@ mainfont: Times New Roman
 ---
 
 \newpage
-#Table of Contents
-* List of Tables
-* List of Figures 
-* Rationale and Research Question
-* Dataset Information
-* Exploratory Analysis 
-  + Data Table
-  + Spatial Analysis
-  + Visualization Analysis
-* Analysis
-* Summary and Conclusions
-* Resources
+# Table of Contents
+- List of Tables
+- List of Figures 
+- Rationale and Research Question
+- Dataset Information
+- Analysis 
+  - Data Table
+  - Spatial Analysis
+  - Visualization Analysis
+- Summary and Conclusions
+- Resources
 
 \newpage
-#List of Tables
-* NC County Health Distribution
+# List of Tables
+- NC County Health Distribution
+- Counties with high populations of hog farms
 
 \newpage
-#List of Figures
-* Hog_Farm_Locations_plot
-* HighPop
-* Population Distribution by County (%)
-* Chronic Health Incidence Rates
-* Health Accessibility 
-* Health Risk Indicators
+# List of Figures
+- Hog Farm locations in North Carolina
+- Counties with High Populations of Hog Farms
+- Population Distribution by County (%)
+- Chronic Health Incidence Rates
+- Health Accessibility 
+- Health Risk Indicators
 
 \newpage
+
+# Introduction
+> Hog farming is the practice of raising and breeding domestic pigs mainly for their meat and skin. Pigs are a popular form of livestock, with more than one billion pigs butchered each year worldwide, 100 million of them in the USA. The discharge of waste from hog farms is usually done by flushing the waste into giant holding ponds called lagoons. The liquid waste from the lagoons is then sprayed onto the farmers’ fields to keep the lagoons from filling. The result, according to the farms’ neighbors, is stench and insects and decay from dead hogs that are piled into open containers before they are removed. The EPA and federal politicians have drafted little to no regulation surrounding CAFOs to safeguard the environment and human welfare from their effects. Because manure lagoons are not connected to a moving water supply, there are little to no regulations surrounding waste disposal. As a result, they are not considered a serious threat to human or environmental health. 
 
 # Rationale and Research Questions
 > Our main research question was if NC counties with higher concentration of hog farms would have higher health disparities compared to counties with lower hog farm concentrations. NC Hog farms dispose of pig poop by collecting enormous amounts of pig pools into lagoons and spraying the liquidy mixture out onto fields. As you can imagine, the fine mist can travel some distance and has led to strong odors and health impacts of neighboring communities. We were interested in seeing the distribution of populations near where hog farms are concentrated as well as if there were any disparities in health and health access. To research this, we looked at health and population distribution data for each NC county and specifically looked at data for counties with the highest concentrations of hog farms (Bladen, Duplin, Greene, Sampson, Robeson, Wayne) and comparing them to counties with low concentrations or no hog farms (Durham - as we are current residents of this county, Beaufort - as this is part of Duke's community, Martin, Wilson, and Warren). We wanted to gain a better understanding of the inequities and environmental justice issues that stem from NC hog farms and pork production economy. 
@@ -84,9 +87,8 @@ Health_Data_Raw <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/Count
 
 ##Data Table - NC County Health Distribution
 
-```{r, data wrangling, include = FALSE, message = FALSE, error = FALSE}
+```{r error=FALSE, message=FALSE, include=FALSE}
 ##Wrangling the dataset 
-
 #Removing columns and rows containing weblinks and other metadata 
 Health_Data_Clean <- Health_Data_Raw[-c(1,2,3),-c(1,3, 4, 5, 6)] 
 
@@ -94,7 +96,6 @@ Health_Data_Clean <- Health_Data_Raw[-c(1,2,3),-c(1,3, 4, 5, 6)]
 Health_Data_Clean <- Health_Data_Clean %>%
   select(Bold.Indicator.Name.Text, NC, X.6, X.8, X.30,X.31, X.39, X.57, X.81, X.77, X.92, X.95, X.97) %>%
   rename(Indicators = Bold.Indicator.Name.Text, Bladen = X.8, Duplin = X.30, Durham = X.31, Greene = X.39, Sampson = X.81, Robeson = X.77, Wayne = X.95, Wilson = X.97, Warren = X.92, Martin = X.57, Beaufort = X.6)
-#Durham - 
 
 #Transposing the data
 Health_data_transposed <- t(Health_Data_Clean)
@@ -133,7 +134,8 @@ class(Health_data_transposed_clean_1)
 write.csv(Health_data_transposed_clean_1, file = "./Data/Processed/projectNCcounties_HealthData.csv")
 ```
 
-```{r health data frame, echo = FALSE, message = FALSE, error = FALSE}
+
+```{r health data frame, error=FALSE, message=FALSE, include=FALSE}
 nccounties.health <- read.csv("./Data/Processed/projectNCcounties_HealthData.csv", stringsAsFactors = FALSE)
 
 print(nccounties.health)
@@ -143,10 +145,22 @@ summary(nccounties.health)
 
 \newpage
 
-##Spatial Analysis
+## Spatial Analysis
 
+<<<<<<< HEAD
 ```{r spatial, error = FALSE, message = FALSE}
 #mapviewOptions(fgb = FALSE)
+=======
+```{r message=FALSE, warning=FALSE, include=FALSE}
+#Loading in the shapefile and filtering for NC counties
+NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
+  filter(STATEFP == 37)
+
+```
+
+**Hog Farms in North Carolina**
+```{r spatial, echo=FALSE, error=FALSE, fig.height=7, fig.width=8, message=FALSE, fig.align='left'}
+>>>>>>> 2b12c73176e1ff209d72c90dddf3b262d6cfa4b0
 
 # Set your ggplot theme
 mytheme <- theme_classic(base_size = 12) +
@@ -161,11 +175,6 @@ mytheme <- theme_classic(base_size = 12) +
         line = element_blank())
 theme_set(mytheme)
 
-
-#Loading in the shapefile and filtering for NC counties
-NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
-  filter(STATEFP == 37)
-
 #Filtering counties that have a high population of Hog farms
 HighPop_HogFarms_sf <- NorthCarolina_sf %>%
   filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen", "Greene", "Wayne"))
@@ -176,7 +185,6 @@ LowPop_HogFarms_sf <- NorthCarolina_sf %>%
 
 
 #Loading in the Hog Farm NC locations file 
-
 HogFarm_Locations <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/Hog_Farm_Locations_NC1.csv") 
 
 #Selecting the required columns with Lat/Long
@@ -189,10 +197,7 @@ HogFarm_Locations_sf <- HogFarm_Locations %>%
   st_as_sf(coords = c('longitude', 'latitude'),
            crs = 4269)
 
-colnames(HogFarm_Locations_sf)
-
 #Spatial Analysis of Hog Farms in all of NC
-
 HogFarm_Locations_plot <-
 ggplot() +
   geom_sf(data = NorthCarolina_sf, aes(fill = 'white')) +
@@ -200,16 +205,22 @@ ggplot() +
   geom_sf(data = LowPop_HogFarms_sf, aes(fill = 'powderblue')) +
   geom_sf(data = HogFarm_Locations_sf, aes(color = 'blue'), size = 2, shape = 8) +
   scale_fill_identity(name = "", breaks = c("white", "lightpink", "powderblue"), 
-                       labels = c("North Carolina", "Counties with high populations of Hog Farms", "Counties with zero or low populations of Hog Farms"), guide = "legend") +
+                       labels = c("North Carolina", "High density Hog Farms", "Low density Hog Farms"), guide = "legend") +
   scale_color_identity(name = "", breaks = c('blue'), 
-                       labels = c('Hog Farms'), guide = 'legend') +
-  ggtitle("Hog Farms in North Carolina") +
+                       labels = c('Hog Farm Locations'), guide = 'legend') +
+  #ggtitle("Hog Farms in North Carolina") +
   mytheme 
 print(HogFarm_Locations_plot)
 
 
-#Spatial Analysis of Counties with a High Population of Hog Farms 
 
+```
+
+**NC counties with high populations of Hog Farms**
+
+```{r echo=FALSE, error=FALSE, message=FALSE, fig.align='left'}
+
+#Spatial Analysis of Counties with a High Population of Hog Farms 
 HighPop_HogFarms_sf <- NorthCarolina_sf %>%
   filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen", "Greene", "Wayne"))
 
@@ -258,16 +269,16 @@ ggplot() +
                       labels = c('Robeson', 'Sampson', 'Duplin', 'Bladen', 'Greene', 'Wayne'),
                       guide = "legend") +
     scale_color_identity(name = "", breaks = c("blue"), labels = c("Hog Farm Locations"), guide = "legend") +
-  ggtitle("NC counties with high populations of Hog Farms") +
+  #ggtitle("NC counties with high populations of Hog Farms") +
   mytheme
 print(HighPop)
-
 ```
+
 
 \newpage
 
-##Visualization Analysis
-###Population
+## Visualization Analysis
+## Population
 ```{r ggplots population, include = FALSE, message = FALSE, error = FALSE}
 nccounties.health <- nccounties.health %>% filter(X != "NC")
 
@@ -452,6 +463,7 @@ health.plot.final <- plot_grid(health.title, health.plot,
 health.plot.final
 
 ```
+
 \newpage
 ###Infant Health
 ```{r infant plots, include = FALSE, message = FALSE, error = FALSE}
@@ -538,9 +550,16 @@ vul.plot.final
 
 #Analysis
 
-
 ## Question 1: Which NC counties have the highest concentration of hog farms?
->
+> Counties with the highest concentration of hog farms in North Carolina are Bladen, Duplin, Greene, Robeson, Sampson and Wayne. 
+
+|    County      |    Number of Hog Farms     |
+|:--------------:|:--------------------------:|
+|  Sampson       |          28                |
+|  Duplin        |          25                |
+|  Bladen        |          19                |
+|  Robeson       |          6                 |
+|  Greene        |          4                 |
 
 ## Question 2: Are hog farms more prevelant in communities with higher BIPOC populations?
 > Counties with higher concentrations of hog farms tend to have a higher distribution of Hispanic/Latinx and Native American communities compared to counties with low concentrations of or no hog farms. In particular, Robeson county has the highest proportion of Native American individuals compared to all the other counties we analyzed. Sampson and Duplin have the highest number of hog farms compared to all the counties we identified, and also has the highest proportion of Hispanic/Latinx individuals compared to the counties we analyzed. 
@@ -563,3 +582,8 @@ vul.plot.final
 * [Environmental Working Group Map - Distribution of Animal Agriculture Farms] <https://www.ewg.org/interactive-maps/2020-fields-of-filth/map/>
 * [NC Farms and Floodplains] <https://sites.tufts.edu/gis/files/2017/06/Moore_Emily_UEP232_2016.pdf>
 * [Democracy Now! Video on NC Hog Farms] <https://www.youtube.com/watch?v=eyAFNV4Afgw>
+* [Cartographic Boundary File] <https://www.arcgis.com/sharing/rest/content/items/05f6d4797e2a428d96c15aba40088159/info/metadata/metadata.xml?format=default&output=html>
+* [Locations of Hog Farms in North Carolina] <https://www.google.com/maps/search/hog+farms+in+north+carolina/@35.2918991,-79.6807785,8z/data=!3m1!4b1>
+* [NC Health News] <https://www.northcarolinahealthnews.org/2020/12/04/neighbors-of-hog-farms-say-recent-appeals-court-ruling-gives-them-hope/>
+* [Phantom Buster] <https://phantombuster.com/>
+* [Environmental Health and impacts of pig farming] <https://en.wikipedia.org/wiki/Pig_farming#Environmental_and_health_impacts>
