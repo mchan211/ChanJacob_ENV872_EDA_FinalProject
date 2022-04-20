@@ -6,7 +6,7 @@ output:
     number_sections: yes
 geometry: margin=2.54cm
 title: "ENV872 course project: Pigs, Poop, and Public Health"
-subtitle: https://github.com/mchan211/ChanJacob_ENV872_EDA_FinalProject.git
+subtitle: https://github.com/mchan211/ChanJacob_ENV872_EDA_FinalProject
 author: "Natasha Jacob and Meilin Chan"
 fontsize: 12pt
 mainfont: Times New Roman
