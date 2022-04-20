@@ -30,11 +30,12 @@ mainfont: Times New Roman
 \newpage
 #List of Tables
 * NC County Health Distribution
+* Counties with high populations of hog farms
 
 \newpage
 #List of Figures
-* Hog_Farm_Locations_plot
-* HighPop
+* Hog Farm locations in North Carolina
+* Counties with High Populations of Hog Farms
 * Population Distribution by County (%)
 * Chronic Health Incidence Rates
 * Health Accessibility 
@@ -43,7 +44,7 @@ mainfont: Times New Roman
 \newpage
 
 # Introduction
-> 
+> Hog farming is the practice of raising and breeding domestic pigs mainly for their meat and skin. Pigs are a popular form of livestock, with more than one billion pigs butchered each year worldwide, 100 million of them in the USA. The discharge of waste from hog farms is usually done by flushing the waste into giant holding ponds called lagoons. The liquid waste from the lagoons is then sprayed onto the farmers’ fields to keep the lagoons from filling. The result, according to the farms’ neighbors, is stench and insects and decay from dead hogs that are piled into open containers before they are removed. The EPA and federal politicians have drafted little to no regulation surrounding CAFOs to safeguard the environment and human welfare from their effects. Because manure lagoons are not connected to a moving water supply, there are little to no regulations surrounding waste disposal. As a result, they are not considered a serious threat to human or environmental health. 
 
 # Rationale and Research Questions
 > Our main research question was if NC counties with higher concentration of hog farms would have higher health disparities compared to counties with lower hog farm concentrations. NC Hog farms dispose of pig poop by collecting enormous amounts of pig pools into lagoons and spraying the liquidy mixture out onto fields. As you can imagine, the fine mist can travel some distance and has led to strong odors and health impacts of neighboring communities. We were interested in seeing the distribution of populations near where hog farms are concentrated as well as if there were any disparities in health and health access. To research this, we looked at health and population distribution data for each NC county and specifically looked at data for counties with the highest concentrations of hog farms (Bladen, Duplin, Greene, Sampson, Robeson, Wayne) and comparing them to counties with low concentrations or no hog farms (Durham - as we are current residents of this county, Beaufort - as this is part of Duke's community, Martin, Wilson, and Warren). We wanted to gain a better understanding of the inequities and environmental justice issues that stem from NC hog farms and pork production economy. 
@@ -146,10 +147,17 @@ summary(nccounties.health)
 
 \newpage
 
-##Spatial Analysis
+## Spatial Analysis
 
-```{r spatial, error = FALSE, message = FALSE}
-mapviewOptions(fgb = FALSE)
+```{r message=FALSE, warning=FALSE, include=FALSE}
+#Loading in the shapefile and filtering for NC counties
+NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
+  filter(STATEFP == 37)
+
+```
+
+
+```{r spatial, echo=FALSE, error=FALSE, message=FALSE}
 
 # Set your ggplot theme
 mytheme <- theme_classic(base_size = 12) +
@@ -164,11 +172,6 @@ mytheme <- theme_classic(base_size = 12) +
         line = element_blank())
 theme_set(mytheme)
 
-
-#Loading in the shapefile and filtering for NC counties
-NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/cb_2018_us_county_20m.shp') %>%
-  filter(STATEFP == 37)
-
 #Filtering counties that have a high population of Hog farms
 HighPop_HogFarms_sf <- NorthCarolina_sf %>%
   filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen", "Greene", "Wayne"))
@@ -179,7 +182,6 @@ LowPop_HogFarms_sf <- NorthCarolina_sf %>%
 
 
 #Loading in the Hog Farm NC locations file 
-
 HogFarm_Locations <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/Hog_Farm_Locations_NC1.csv") 
 
 #Selecting the required columns with Lat/Long
@@ -192,10 +194,7 @@ HogFarm_Locations_sf <- HogFarm_Locations %>%
   st_as_sf(coords = c('longitude', 'latitude'),
            crs = 4269)
 
-colnames(HogFarm_Locations_sf)
-
 #Spatial Analysis of Hog Farms in all of NC
-
 HogFarm_Locations_plot <-
 ggplot() +
   geom_sf(data = NorthCarolina_sf, aes(fill = 'white')) +
@@ -212,7 +211,6 @@ print(HogFarm_Locations_plot)
 
 
 #Spatial Analysis of Counties with a High Population of Hog Farms 
-
 HighPop_HogFarms_sf <- NorthCarolina_sf %>%
   filter(NAME %in% c("Robeson", "Sampson", "Duplin", "Bladen", "Greene", "Wayne"))
 
@@ -269,8 +267,8 @@ print(HighPop)
 
 \newpage
 
-##Visualization Analysis
-###Population
+## Visualization Analysis
+## Population
 ```{r ggplots population, include = FALSE, message = FALSE, error = FALSE}
 nccounties.health <- nccounties.health %>% filter(X != "NC")
 
@@ -542,9 +540,16 @@ vul.plot.final
 
 #Analysis
 
-
 ## Question 1: Which NC counties have the highest concentration of hog farms?
-> 
+> Counties with the highest concentration of hog farms in North Carolina are Bladen, Duplin, Greene, Robeson, Sampson and Wayne. 
+
+|    County      |    Number of Hog Farms     |
+|:--------------:|:--------------------------:|
+|  Sampson       |          28                |
+|  Duplin        |          25                |
+|  Bladen        |          19                |
+|  Robeson       |          6                 |
+|  Greene        |          4                 |
 
 ## Question 2: Are hog farms more prevelant in communities with higher BIPOC populations?
 > Counties with higher concentrations of hog farms tend to have a higher distribution of Hispanic/Latinx and Native American communities compared to counties with low concentrations of or no hog farms. In particular, Robeson county has the highest proportion of Native American individuals compared to all the other counties we analyzed. Sampson and Duplin have the highest number of hog farms compared to all the counties we identified, and also has the highest proportion of Hispanic/Latinx individuals compared to the counties we analyzed. 
