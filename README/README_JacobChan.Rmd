@@ -49,6 +49,7 @@ library(dplyr)
 
 * Hog_Farm_Locations_NC1.csv (Spatial folder)
   + Source: Google maps
+  + accessed: April 10, 2022
   
 ## Folder structure, file formats, and naming conventions 
 + Folders
