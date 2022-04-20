@@ -14,32 +14,31 @@ mainfont: Times New Roman
 ---
 
 \newpage
-#Table of Contents
-* List of Tables
-* List of Figures 
-* Rationale and Research Question
-* Dataset Information
-* Exploratory Analysis 
-  + Data Table
-  + Spatial Analysis
-  + Visualization Analysis
-* Analysis
-* Summary and Conclusions
-* Resources
+# Table of Contents
+- List of Tables
+- List of Figures 
+- Rationale and Research Question
+- Dataset Information
+- Analysis 
+  - Data Table
+  - Spatial Analysis
+  - Visualization Analysis
+- Summary and Conclusions
+- Resources
 
 \newpage
-#List of Tables
-* NC County Health Distribution
-* Counties with high populations of hog farms
+# List of Tables
+- NC County Health Distribution
+- Counties with high populations of hog farms
 
 \newpage
-#List of Figures
-* Hog Farm locations in North Carolina
-* Counties with High Populations of Hog Farms
-* Population Distribution by County (%)
-* Chronic Health Incidence Rates
-* Health Accessibility 
-* Health Risk Indicators
+# List of Figures
+- Hog Farm locations in North Carolina
+- Counties with High Populations of Hog Farms
+- Population Distribution by County (%)
+- Chronic Health Incidence Rates
+- Health Accessibility 
+- Health Risk Indicators
 
 \newpage
 
@@ -88,9 +87,8 @@ Health_Data_Raw <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/Count
 
 ##Data Table - NC County Health Distribution
 
-```{r, data wrangling, include = FALSE, message = FALSE, error = FALSE}
+```{r error=FALSE, message=FALSE, include=FALSE}
 ##Wrangling the dataset 
-
 #Removing columns and rows containing weblinks and other metadata 
 Health_Data_Clean <- Health_Data_Raw[-c(1,2,3),-c(1,3, 4, 5, 6)] 
 
@@ -98,7 +96,6 @@ Health_Data_Clean <- Health_Data_Raw[-c(1,2,3),-c(1,3, 4, 5, 6)]
 Health_Data_Clean <- Health_Data_Clean %>%
   select(Bold.Indicator.Name.Text, NC, X.6, X.8, X.30,X.31, X.39, X.57, X.81, X.77, X.92, X.95, X.97) %>%
   rename(Indicators = Bold.Indicator.Name.Text, Bladen = X.8, Duplin = X.30, Durham = X.31, Greene = X.39, Sampson = X.81, Robeson = X.77, Wayne = X.95, Wilson = X.97, Warren = X.92, Martin = X.57, Beaufort = X.6)
-#Durham - 
 
 #Transposing the data
 Health_data_transposed <- t(Health_Data_Clean)
@@ -137,7 +134,8 @@ class(Health_data_transposed_clean_1)
 write.csv(Health_data_transposed_clean_1, file = "./Data/Processed/projectNCcounties_HealthData.csv")
 ```
 
-```{r health data frame, echo = FALSE, message = FALSE, error = FALSE}
+
+```{r health data frame, error=FALSE, message=FALSE, include=FALSE}
 nccounties.health <- read.csv("./Data/Processed/projectNCcounties_HealthData.csv", stringsAsFactors = FALSE)
 
 print(nccounties.health)
@@ -156,8 +154,8 @@ NorthCarolina_sf <- st_read('../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/c
 
 ```
 
-
-```{r spatial, echo=FALSE, error=FALSE, message=FALSE}
+**Hog Farms in North Carolina**
+```{r spatial, echo=FALSE, error=FALSE, fig.height=7, fig.width=8, message=FALSE, fig.align='left'}
 
 # Set your ggplot theme
 mytheme <- theme_classic(base_size = 12) +
@@ -202,13 +200,20 @@ ggplot() +
   geom_sf(data = LowPop_HogFarms_sf, aes(fill = 'powderblue')) +
   geom_sf(data = HogFarm_Locations_sf, aes(color = 'blue'), size = 2, shape = 8) +
   scale_fill_identity(name = "", breaks = c("white", "lightpink", "powderblue"), 
-                       labels = c("North Carolina", "Counties with high populations of Hog Farms", "Counties with zero or low populations of Hog Farms"), guide = "legend") +
+                       labels = c("North Carolina", "High density Hog Farms", "Low density Hog Farms"), guide = "legend") +
   scale_color_identity(name = "", breaks = c('blue'), 
-                       labels = c('Hog Farms'), guide = 'legend') +
-  ggtitle("Hog Farms in North Carolina") +
+                       labels = c('Hog Farm Locations'), guide = 'legend') +
+  #ggtitle("Hog Farms in North Carolina") +
   mytheme 
 print(HogFarm_Locations_plot)
 
+
+
+```
+
+**NC counties with high populations of Hog Farms**
+
+```{r echo=FALSE, error=FALSE, message=FALSE, fig.align='left'}
 
 #Spatial Analysis of Counties with a High Population of Hog Farms 
 HighPop_HogFarms_sf <- NorthCarolina_sf %>%
@@ -259,11 +264,11 @@ ggplot() +
                       labels = c('Robeson', 'Sampson', 'Duplin', 'Bladen', 'Greene', 'Wayne'),
                       guide = "legend") +
     scale_color_identity(name = "", breaks = c("blue"), labels = c("Hog Farm Locations"), guide = "legend") +
-  ggtitle("NC counties with high populations of Hog Farms") +
+  #ggtitle("NC counties with high populations of Hog Farms") +
   mytheme
 print(HighPop)
-
 ```
+
 
 \newpage
 
