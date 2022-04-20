@@ -41,6 +41,9 @@ mainfont: Times New Roman
 
 \newpage
 
+# Introduction
+> 
+
 # Rationale and Research Questions
 > Our main research question was if NC counties with higher concentration of hog farms would have higher health disparities compared to counties with lower hog farm concentrations. NC Hog farms dispose of pig poop by collecting enormous amounts of pig pools into lagoons and spraying the liquidy mixture out onto fields. As you can imagine, the fine mist can travel some distance and has led to strong odors and health impacts of neighboring communities. We were interested in seeing the distribution of populations near where hog farms are concentrated as well as if there were any disparities in health and health access. To research this, we looked at health and population distribution data for each NC county and specifically looked at data for counties with the highest concentrations of hog farms (Bladen, Duplin, Greene, Sampson, Robeson, Wayne) and comparing them to counties with low concentrations or no hog farms (Durham - as we are current residents of this county, Beaufort - as this is part of Duke's community, Martin, Wilson, and Warren). We wanted to gain a better understanding of the inequities and environmental justice issues that stem from NC hog farms and pork production economy. 
 
@@ -451,6 +454,7 @@ health.plot.final <- plot_grid(health.title, health.plot,
 health.plot.final
 
 ```
+
 \newpage
 ###Infant Health
 ```{r infant plots, include = FALSE, message = FALSE, error = FALSE}
@@ -539,7 +543,7 @@ vul.plot.final
 
 
 ## Question 1: Which NC counties have the highest concentration of hog farms?
->
+> 
 
 ## Question 2: Are hog farms more prevelant in communities with higher BIPOC populations?
 >
@@ -560,3 +564,8 @@ vul.plot.final
 * [Environmental Working Group Map - Distribution of Animal Agriculture Farms] <https://www.ewg.org/interactive-maps/2020-fields-of-filth/map/>
 * [NC Farms and Floodplains] <https://sites.tufts.edu/gis/files/2017/06/Moore_Emily_UEP232_2016.pdf>
 * [Democracy Now! Video on NC Hog Farms] <https://www.youtube.com/watch?v=eyAFNV4Afgw>
+* [Cartographic Boundary File] <https://www.arcgis.com/sharing/rest/content/items/05f6d4797e2a428d96c15aba40088159/info/metadata/metadata.xml?format=default&output=html>
+* [Locations of Hog Farms in North Carolina] <https://www.google.com/maps/search/hog+farms+in+north+carolina/@35.2918991,-79.6807785,8z/data=!3m1!4b1>
+* [NC Health News] <https://www.northcarolinahealthnews.org/2020/12/04/neighbors-of-hog-farms-say-recent-appeals-court-ruling-gives-them-hope/>
+* [Phantom Buster] <https://phantombuster.com/>
+* [Environmental Health and impacts of pig farming] <https://en.wikipedia.org/wiki/Pig_farming#Environmental_and_health_impacts>
