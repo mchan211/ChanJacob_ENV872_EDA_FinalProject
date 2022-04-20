@@ -33,7 +33,8 @@ mainfont: Times New Roman
 
 \newpage
 #List of Figures
-* [MAP NAME]
+* Hog_Farm_Locations_plot
+* HighPop
 * Population Distribution by County (%)
 * Chronic Health Incidence Rates
 * Health Accessibility 
@@ -50,11 +51,11 @@ mainfont: Times New Roman
 \newpage
 
 # Dataset Information
-> Our core analysis revolves around the use of spatial datasets and a dataset containing population distribution and health data for each NC county.
+> Our core analysis revolves around the use of spatial datasets of NC counties and hog farm locations, and a dataset containing population distribution and health data for each NC county.
 
 * Spatial Data
-  + [NAME]
-  + [NAME]
+  + cb_2018_us_county_20m.shp
+  + Hog_Farm_Locations_NC1.csv
 * Visualization Data
   + CountyHogs_HealthData.csv
 
@@ -546,16 +547,18 @@ vul.plot.final
 > 
 
 ## Question 2: Are hog farms more prevelant in communities with higher BIPOC populations?
->
+> Counties with higher concentrations of hog farms tend to have a higher distribution of Hispanic/Latinx and Native American communities compared to counties with low concentrations of or no hog farms. In particular, Robeson county has the highest proportion of Native American individuals compared to all the other counties we analyzed. Sampson and Duplin have the highest number of hog farms compared to all the counties we identified, and also has the highest proportion of Hispanic/Latinx individuals compared to the counties we analyzed. 
 
 ## Question 3: What health inequities are most prevelant in counties with  high concentratiosn of hog farms?
->
+> Counties with high concentrations of hog farms tended to have lower number of physicians per 10,000 people compared to the other counties we observed. Further, these counties also had higher % of adults without health insurance. Robeson county, which also had the highest distribution of Native American individuals, also had the highest % of its population living in poverty. Counties with higher concentrations of hog farms also had slightly higher air PM density measurements - it should be noted that Durham is considered metropolitan compared to the other analyzed counties and thus would have a higher average density of PM. The counties with the highest concentrations of hog farms in particular (Sampson, Duplin) has a population where a quarter is under 18 years old which is a population vulnerable to environmental health impacts. 
 
 
 \newpage
 
 # Summary and Conclusions
-> Inequities in access to health 
+> Our analysis was just a surface level look at potential connections between hog farm location in NC, BIPOC communities, and health disparities. From our visualizations, we see that higher concentrations of hog farms tend to be in counties with higher distributions of Hispanic/Latinx and Native American communities compared to counties with low or no hog farms. Further, communities with higher concentrations of hog farms also tended to have lower numbers of available physicians per population size, higher % of adults without health insurance, higher average daily density PM measurements, and higher % population of children (under 18 years old). Although our analysis did not find strong relationships between counties with high concentrations of hog farms and public health impacts on chronic diseases and infant health, it is possible there are specific health impacts that are unreported. Our data set did not provide data on respiratory health or other less deathly health impacts (ie: headaches, nausea, etc.) that individuals living near hog farms could be experiencing more frequently. 
+
+> Future studies could dig further into the impact of hog farm feces disposal methods on air quality and water quality of Wayne, Bladen, Greene, Robeson, Sampson, and Duplin counties. With air quality, a study could measure and visualize daily air quality measurements and see if there are any increases in PM specifically during periods where the lagoon feces mixture is sprayed into the air. One could also look into if there are any unreported health impacts due to inaccessability to health care in counties with high concentrations of hog farms (ie: no health insurance, low number of physicians compared to population). 
 
 \newpage
 
