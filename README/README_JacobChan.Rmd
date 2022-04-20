@@ -13,11 +13,6 @@ library(dplyr)
 
 ```
 
-<Instructions: copy and paste this template into your project README file (found in the parent folder of the repository). Fill in relevant information as requested.>
-
-<General notes: add as much information as is relevant for your repository. Some overarching guidelines are provided, but feel free to expand on these guidelines.>
-<More resources found here: https://www.dataone.org/all-best-practices>
-<Delete the text inside the brackets when formatting your file.>
 
 ## Summary
 
@@ -151,7 +146,7 @@ summary(NorthCarolina_sf)
 |  geometry             |   Geographic coordinates of counties in North Carolina                     |
 
 
-> The Hog_Farm_Locations_NC.csv file contains locations of Hog Farms present in North Carolina. The coordinates of Hog Farm Locations were obtained from Google Maps. Phantom Buster - a web application used for extracting data from websites was used to extract coordinates of Hog Farms from Google Maps. The coordinates were converted to a spatial features dataset inorder to map them with the counties dataset. 
+> The Hog_Farm_Locations_NC.csv file contains locations of Hog Farms present in North Carolina. The coordinates of Hog Farm Locations were obtained from Google Maps. Phantom Buster - a web application used for extracting data from websites was used to extract coordinates of Hog Farms from Google Maps. The coordinates were converted to a spatial features dataset in order to map them with the counties dataset. 
 
 ```{r}
 HogFarm_Locations <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Spatial/Hog_Farm_Locations_NC1.csv") 
@@ -181,7 +176,7 @@ summary(HogFarm_Locations_sf)
 <For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.> 
 
 ## Scripts and code
-> No scripts or code are contained in our repository.
+> JacobChan_FinalProject_HogFarms.Rmd - Code for wrangling data, spatial and graphical visualization analysis 
 
 ## Quality assurance/quality control
 > We sourced our data from reputible sources such as Google Maps, the Environmental_Data_Analytics_2022 GitHub, and the North Carolina Institute of Medicine. It should be noted that some existing hog farms are not within the Google Maps database and as such were not included within the spatial analysis. To ensure high quality of consistancy in our data, we kept organized unwrangled data in a Raw folder, dataframes we had wrangled and saved in a Processed folder, and any data used with spatial analysis into a Spatial folder. We renamed our data files using names that would provide users a general idea of what the data contained. We never wrangled or edited the Raw data files, and agreed to only save wrangled data that would be used widely in our analyses. All our data and project files were saved and backed up to our GitHub repository which we pulled from at the beginning of each session, and pushed to at the end of each session. 

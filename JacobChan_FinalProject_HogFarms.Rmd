@@ -5,8 +5,7 @@ output:
     fig_caption: yes
     number_sections: yes
 geometry: margin=2.54cm
-title: "Pigs, Poop, and Public Health"
-subtitle: "https://github.com/mchan211/ChanJacob_ENV872_EDA_FinalProject.git"
+title: "ENV872 course project: Pigs, Poop, and Public Health"
 author: "Natasha Jacob and Meilin Chan"
 fontsize: 12pt
 mainfont: Times New Roman
@@ -16,22 +15,22 @@ mainfont: Times New Roman
 \newpage
 # Table of Contents
 - List of Tables
-- List of Figures 
+- List of Figures
+- Introduction
 - Rationale and Research Question
 - Dataset Information
 - Analysis 
-  - Data Table
   - Spatial Analysis
   - Visualization Analysis
 - Summary and Conclusions
 - Resources
 
 \newpage
-# List of Tables
-- NC County Health Distribution
+# List of Tables 
+- Dataset information 
+- Counties used in our analysis 
 - Counties with high populations of hog farms
 
-\newpage
 # List of Figures
 - Hog Farm locations in North Carolina
 - Counties with High Populations of Hog Farms
@@ -59,6 +58,50 @@ mainfont: Times New Roman
 * Visualization Data
   + CountyHogs_HealthData.csv
 
+|             Column Name               |     Description - all per county     |
+|:-------------------------------------:|:------------------------------------:|
+|    Population                         |   Total population                   |
+|    Child_Population_percentage        |   % (per county)                     |
+|    Elderly_Population_percentage      |   % (per county)                     |
+|    White_Population_percentage        |   % (per county)                     |
+|    Hispanic_Latinx_percentage         |   % (per county)                     |
+|    African_American_percentage        |   % (per county)                     |
+|    American_Indian_percentage         |   % (per county)                     |
+|    Reading_Proficiency_percentage     |   % literacy rate per county         |
+|    Uninsured_Adults_percentage        |   % adults w/out health insurance    |
+|    Medicaid_CHIP_enrolles_percentage  |   % individ. w/ Medicaid or CHIP     |
+|    Primary_Care_Physicians            |   Physicians per 10,000 pop.         |
+|    Low_Birthweight_percentage         |   % of low birth weight occurrences  |
+|    Infant_Mortality_Rate              |   % rate of infant mortality         |
+|    Cancer_Incidence                   |   Incidence rates per 100,000 pop.   |
+|    Heart_Disease                      |   Death rates per 100,000 pop.       |
+|    Poverty_percentage                 |   % of pop. living under poverty line|
+|    Air_Pollution                      |   avg. daily density of PM (ug/m3)   |
+
+> Table 1. Table showing description of variables and units used in the study 
+
+
+|             High density              |           Low density                |
+|:-------------------------------------:|:------------------------------------:|
+|   Bladen                              |          Wilson                      |
+|   Duplin                              |          Warren                      |
+|   Greene                              |          Martin                      |
+|   Robeson                             |          Beaufort                    |
+|   Sampson                             |          Durham                      |
+|   Wayne                               |                                      |
+
+> Table 2. Table showing North Carolina counties used in the study - counties with high and low densities of hog farms in North Carolina 
+
+**Data Wrangling**
+
+The file was first converted from a .xlsx format to a .csv format since the csv file was found to be more compatible with the functions we used in R. A detailed explanation of the data wrangling process can be found below: 
+
+- Select and de-select functions were used to remove rows and columns containing weblinks and other metadata
+- A piped statement was used to select the counties we were interested in and rename the column names
+- Transpose function was used to interchange data present in rows and columns (x,y) to for easier visualization
+- A piped statement was used to rename column names again due to the use of the 'Transpose' function
+- A piped statement with the 'gsub' function was used to remove '%' characters from values
+
 
 \newpage
 
@@ -83,9 +126,6 @@ Health_Data_Raw <- read.csv("../ChanJacob_ENV872_EDA_FinalProject/Data/Raw/Count
 
 ```
 
-# Analysis 
-
-##Data Table - NC County Health Distribution
 
 ```{r error=FALSE, message=FALSE, include=FALSE}
 ##Wrangling the dataset 
@@ -145,6 +185,7 @@ summary(nccounties.health)
 
 \newpage
 
+# Data Analysis 
 ## Spatial Analysis
 
 <<<<<<< HEAD
@@ -216,9 +257,13 @@ print(HogFarm_Locations_plot)
 
 ```
 
+> Figure 1. Map showing spatial extent of Hog Farm sites located in North Carolina 
+
+\newpage
+
 **NC counties with high populations of Hog Farms**
 
-```{r echo=FALSE, error=FALSE, message=FALSE, fig.align='left'}
+```{r echo=FALSE, error=FALSE, message=FALSE, fig.align='center'}
 
 #Spatial Analysis of Counties with a High Population of Hog Farms 
 HighPop_HogFarms_sf <- NorthCarolina_sf %>%
@@ -274,11 +319,14 @@ ggplot() +
 print(HighPop)
 ```
 
+> Figure 2. Subset map showing counties with high hog farm density in North Carolina 
 
 \newpage
 
 ## Visualization Analysis
-## Population
+
+**Population distribution by county (%)**
+
 ```{r ggplots population, include = FALSE, message = FALSE, error = FALSE}
 nccounties.health <- nccounties.health %>% filter(X != "NC")
 
@@ -337,10 +385,7 @@ pop.plot <- plot_grid(NC.pop.distribution + theme(legend.position = "none"),
                       nrow = 2,
                       align = 'hv')
 pop.title <- ggdraw() +
-  draw_label("Population Distribution by County(%)",
-             fontface='bold',
-             x = 0,
-             hjust = 0) +
+  #draw_label("Population Distribution by County(%)", fontface='bold', x = 0, hjust = 0) +
   theme(plot.margin = margin (0,0,0,7))
 
 pop.plot.complete <- plot_grid(pop.title, pop.plot, 
@@ -351,7 +396,8 @@ pop.plot.complete
 ```
 \newpage
 
-###Chronic Illness
+**Chronic Health Incidence Rates**
+
 ```{r ggplots disease, include = FALSE, message = FALSE, error = FALSE}
 #Chronic Health
 cancer.plot <- ggplot(nccounties.health, 
@@ -377,10 +423,7 @@ chronic.disease.plot <- plot_grid(cancer.plot + theme(legend.position = "none"),
                                   nrow = 1,
                                   align = 'hv')
 disease.title <- ggdraw() +
-  draw_label("Chronic Health Incidence Rates",
-             fontface='bold',
-             x = 0,
-             hjust = 0) +
+  #draw_label("Chronic Health Incidence Rates", fontface='bold', x = 0, hjust = 0) +
   theme(plot.margin = margin (0,0,0,7))
 
 chronic.disease.complete <- plot_grid(disease.title, chronic.disease.plot,
@@ -388,7 +431,9 @@ chronic.disease.complete <- plot_grid(disease.title, chronic.disease.plot,
 chronic.disease.complete
 ```
 \newpage
-###Health Challenge Indicators
+
+**Health Risk Indicators**
+
 ```{r, health plot, include = FALSE, message = FALSE, error = FALSE}
 phys.plot <- ggplot(nccounties.health,
                     aes(reorder(X, Primary_Care_Physicians),
@@ -452,10 +497,7 @@ health.plot <- plot_grid(health.plot.1, health.plot.2,
                          nrow = 2,
                          align = 'hv')
 health.title <- ggdraw() +
-  draw_label("Health Risk Indicators",
-             fontface='bold',
-             x = 0,
-             hjust = 0) +
+  #draw_label("Health Risk Indicators", fontface='bold', x = 0, hjust = 0) +
   theme(plot.margin = margin (0,0,0,7))
 
 health.plot.final <- plot_grid(health.title, health.plot,
@@ -465,7 +507,9 @@ health.plot.final
 ```
 
 \newpage
-###Infant Health
+
+**Infant Health Disparities**
+
 ```{r infant plots, include = FALSE, message = FALSE, error = FALSE}
 birthweight.plot <- ggplot(nccounties.health,
                            aes(reorder(X, Low_Birthweight_percentage),
@@ -491,10 +535,7 @@ infant.plot <- plot_grid(birthweight.plot + theme(legend.position = "none"),
                          align = 'hv')
 
 infant.title <- ggdraw() +
-  draw_label("Infant Health Disparities",
-             fontface='bold',
-             x = 0,
-             hjust = 0) +
+  #draw_label("Infant Health Disparities", fontface='bold', x = 0, hjust = 0) +
   theme(plot.margin = margin (0,0,0,7))
 
 infant.plot.final <- plot_grid(infant.title, infant.plot,
@@ -504,7 +545,9 @@ infant.plot.final
 ```
 
 \newpage
-###Vulnerable Populations
+
+**Vulnerable Populations**
+
 ```{r vulnerable, include = FALSE, message = FALSE, error = FALSE}
 
 chil.plot <- ggplot(nccounties.health,
@@ -532,10 +575,7 @@ vul.plot <- plot_grid(chil.plot + theme(legend.position = "none"),
                       ncol = 2,
                       align = 'hv')
 vul.title <- ggdraw() +
-  draw_label("Vulnerable Populations",
-             fontface='bold',
-             x = 0,
-             hjust = 0) +
+  #draw_label("Vulnerable Populations", fontface='bold', x = 0, hjust = 0) +
   theme(plot.margin = margin (0,0,0,7))
 
 vul.plot.final <- plot_grid(vul.title, vul.plot,
@@ -545,13 +585,11 @@ vul.plot.final
 ```
 
 
-
 \newpage
 
-#Analysis
+**Question 1: Which NC counties have the highest concentration of hog farms?**
 
-## Question 1: Which NC counties have the highest concentration of hog farms?
-> Counties with the highest concentration of hog farms in North Carolina are Bladen, Duplin, Greene, Robeson, Sampson and Wayne. 
+> Counties with the highest concentration of hog farms in North Carolina are Bladen, Duplin, Greene, Robeson, Sampson and Wayne (Table 2).  
 
 |    County      |    Number of Hog Farms     |
 |:--------------:|:--------------------------:|
@@ -561,10 +599,14 @@ vul.plot.final
 |  Robeson       |          6                 |
 |  Greene        |          4                 |
 
-## Question 2: Are hog farms more prevelant in communities with higher BIPOC populations?
+> Table 2: NC counties with high density hog farms 
+
+**Question 2: Are hog farms more prevelant in communities with higher BIPOC populations?**
+
 > Counties with higher concentrations of hog farms tend to have a higher distribution of Hispanic/Latinx and Native American communities compared to counties with low concentrations of or no hog farms. In particular, Robeson county has the highest proportion of Native American individuals compared to all the other counties we analyzed. Sampson and Duplin have the highest number of hog farms compared to all the counties we identified, and also has the highest proportion of Hispanic/Latinx individuals compared to the counties we analyzed. 
 
-## Question 3: What health inequities are most prevelant in counties with  high concentratiosn of hog farms?
+**Question 3: What health inequities are most prevalant in counties with  high concentrations of hog farms?**
+
 > Counties with high concentrations of hog farms tended to have lower number of physicians per 10,000 people compared to the other counties we observed. Further, these counties also had higher % of adults without health insurance. Robeson county, which also had the highest distribution of Native American individuals, also had the highest % of its population living in poverty. Counties with higher concentrations of hog farms also had slightly higher air PM density measurements - it should be noted that Durham is considered metropolitan compared to the other analyzed counties and thus would have a higher average density of PM. The counties with the highest concentrations of hog farms in particular (Sampson, Duplin) has a population where a quarter is under 18 years old which is a population vulnerable to environmental health impacts. 
 
 
