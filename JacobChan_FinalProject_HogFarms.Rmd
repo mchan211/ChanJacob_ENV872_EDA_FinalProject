@@ -390,7 +390,7 @@ pop.plot.complete <- plot_grid(pop.title, pop.plot,
 pop.plot.complete
 
 ```
->Figure 3. Bar graph of various population distributions within each county
+>Figure 3. Population Distribution by County (%)
 
 \newpage
 
@@ -428,7 +428,7 @@ chronic.disease.complete <- plot_grid(disease.title, chronic.disease.plot,
                                       ncol = 1, rel_heights = c(0.1, 1))
 chronic.disease.complete
 ```
-> Figure 4. Bar graph showing incidence rates of heart disease and cancer within each county
+> Figure 4. Chronic Health Incidence Rates
 
 \newpage
 
@@ -505,7 +505,7 @@ health.plot.final <- plot_grid(health.title, health.plot,
 health.plot.final
 
 ```
-> Figure 5. Bar graph of various health risk indicators within each county
+> Figure 5. Health Risk Indicators
 
 
 \newpage
@@ -545,7 +545,7 @@ infant.plot.final <- plot_grid(infant.title, infant.plot,
 infant.plot.final
 
 ```
-> Figure 6. Bar graph of infant mortality and low birthweight risk within each county
+> Figure 6. Infant Health Disparities
 
 
 \newpage
@@ -587,7 +587,7 @@ vul.plot.final <- plot_grid(vul.title, vul.plot,
 vul.plot.final
 
 ```
-> Figure 7. Bar graph of the distribution of vulnerable populations within each county
+> Figure 7. Vulnerable Populations
 
 \newpage
 
